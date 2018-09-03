@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import "./NavBar.css"
 import {
   Collapse,
   Navbar,
@@ -26,7 +27,7 @@ class NavBar extends Component {
   render() {
     return (
       <div>
-        <Navbar color="primary" dark expand="md">
+        <Navbar dark expand="md">
           <div className="container">
             <Link to="/" className="navbar-brand">
               LoL Scoreboard

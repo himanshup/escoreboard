@@ -6,11 +6,15 @@ const MatchLinks = () => {
   const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   return (
     <div id="menu" className="p-3 text-center shadow-sm">
-      {weeks.map((week,index) => (
-        <Link key={index} to={`/nalcs/regular/week/${week}`} className="text-dark lead mr-3">
-          Week {week}
-        </Link>
-      ))}
+      <div className="row">
+        {weeks.map((week, index) => (
+          <div className="col" key={index}>
+            <Link to={`/nalcs/regular/week/${week}`} className="text-dark lead">
+              Week {week}
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

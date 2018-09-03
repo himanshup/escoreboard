@@ -44,104 +44,136 @@ class Match extends Component {
   render() {
     return (
       <div className="row">
-        <div className="col-12 col-sm-6 col-md-6 col-lg-4">
+        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
-            <span className="ml-3 mt-1">
-              Sat, Jun 16
+            <span className="ml-3 mt-2">
+              <span className="text-muted">Sat, Jun 16</span>
               <span className="mr-3 mt-0 float-right">Final</span>
             </span>
 
             <div className="card-body">
-              <h5 className="card-title mt-2 float-right">1</h5>
-              <div />
-              <h5 id="team1" className="card-title">
+              <div className="media">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/1537/300px-100_Thieveslogo_square.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                <span className="team1">100 Thieves</span>
-              </h5>
-              <h5 className="card-title mt-2 float-right">0</h5>
-              <div />
-              <h5 id="team2" className="card-title">
+                <div className="media-body">
+                  <h5 className="">
+                    100 Thieves <span className="float-right mt-3">1</span>
+                    <div>
+                      <small className="text-primary">Victory</small>
+                    </div>
+                  </h5>
+                </div>
+              </div>
+              <div className="media mt-3">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/390/team-liquid-3g983dra.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                <span className="team2">Team Liquid</span>
-              </h5>
+                <div className="media-body">
+                  <h5 className="">
+                    Team Liquid <span className="float-right mt-3">0</span>
+                    <div>
+                      <small className="text-danger">Defeat</small>
+                    </div>
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="col-12 col-sm-6 col-md-6 col-lg-4">
+        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
-            <span className="ml-3 mt-1">
-              Sat, Jun 16
+            <span className="ml-3 mt-2">
+              <span className="text-muted">Sat, Jun 16</span>
               <span className="mr-3 mt-0 float-right">Final</span>
             </span>
 
             <div className="card-body">
-              <h5 className="card-title mt-2 float-right">1</h5>
-              <div />
-              <h5 id="team1" className="card-title">
+              <div className="media">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/1537/300px-100_Thieveslogo_square.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                100 Thieves
-              </h5>
-              <h5 className="card-title mt-2 float-right">0</h5>
-              <div />
-              <h5 id="team2" className="card-title">
+                <div className="media-body">
+                  <h5 className="">
+                    100 Thieves <span className="float-right mt-2">1</span>
+                    <div>
+                      <small className="text-primary">Victory</small>
+                    </div>
+                  </h5>
+                </div>
+              </div>
+              <div className="media mt-3">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/390/team-liquid-3g983dra.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                Team Liquid
-              </h5>
+                <div className="media-body">
+                  <h5 className="">
+                    Team Liquid <span className="float-right mt-2">0</span>
+                    <div>
+                      <small className="text-danger">Defeat</small>
+                    </div>
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="col-12 col-sm-6 col-md-6 col-lg-4">
+        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
-            <span className="ml-3 mt-1">
-              Sat, Jun 16
-              <span className="mr-3 mt-0 float-right">Final</span>
+            <span className="ml-3 mt-2">
+              <span className="text-muted">Sat, Jun 16</span>
+              <span className="mr-3 mt-0 float-right text-danger">
+                &#11044; Live
+              </span>
             </span>
 
             <div className="card-body">
-              <h5 className="card-title mt-2 float-right">1</h5>
-              <div />
-              <h5 id="team1" className="card-title">
+              <div className="media">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/1537/300px-100_Thieveslogo_square.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                100 Thieves
-              </h5>
-              <h5 className="card-title mt-2 float-right">0</h5>
-              <div />
-              <h5 id="team2" className="card-title">
+                <div className="media-body">
+                  <h5 className="">
+                    100 Thieves <span className="float-right mt-2">1</span>
+                    <div>
+                      {/* <small className="text-primary gameStatus">Victory</small> */}
+                    </div>
+                  </h5>
+                </div>
+              </div>
+              <div className="media mt-3">
                 <img
+                  className="mr-3"
                   src="https://cdn.pandascore.co/images/team/image/390/team-liquid-3g983dra.png"
                   alt=""
                   width="50px"
-                  className="mr-3"
                 />
-                Team Liquid
-              </h5>
+                <div className="media-body">
+                  <h5 className="">
+                    Team Liquid <span className="float-right mt-2">1</span>
+                    <div>
+                      {/* <small className="text-danger gameStatus">Defeat</small> */}
+                    </div>
+                  </h5>
+                </div>
+              </div>
             </div>
           </div>
         </div>

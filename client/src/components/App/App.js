@@ -10,7 +10,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar />
-          <div className="container mt-3">
+          <div className="mt-3">
             <MatchesNav />
           </div>
         </div>
