@@ -14,7 +14,7 @@ app.get("/api/nalcs/regular/matches", (req, res) => {
       res.send(response.data);
     })
     .catch(error => {
-      res.send(error);
+      res.send(error.response.data);
     });
 });
 
@@ -29,11 +29,11 @@ app.get("/api/nalcs/regular/matches/:start/:end", (req, res) => {
       res.send(response.data);
     })
     .catch(error => {
-      res.send(error);
+      res.send(error.response.data);
     });
 });
 
-app.get("/api/match/:matchId", (req, res) => {
+app.get("/api/nalcs/match/:matchId", (req, res) => {
   axios
     .get(
       `https://api.pandascore.co/lol/matches?filter[id]=${
@@ -44,7 +44,7 @@ app.get("/api/match/:matchId", (req, res) => {
       res.send(response.data);
     })
     .catch(error => {
-      res.send(error);
+      res.send(error.response.data);
     });
 });
 
