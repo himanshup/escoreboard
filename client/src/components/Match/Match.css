@@ -14,3 +14,8 @@
   transition: transform 0.44s, box-shadow 0.44s, color 0.77s 0.77s;
   min-height: 200px;
 }
+
+.stuff {
+  margin-bottom: -20px;
+  margin-top: -10px;
+}

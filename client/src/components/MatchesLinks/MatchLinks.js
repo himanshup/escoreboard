@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./MatchLinks.css";
 
 const MatchLinks = () => {
-  const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const weeks = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   return (
     <div id="menu" className="p-3 text-center shadow-sm">
       <div className="row">

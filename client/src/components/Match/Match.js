@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Moment from "react-moment";
+import { UncontrolledCollapse, Button, CardBody, Card } from "reactstrap";
+import { FaAngleDown } from "react-icons/fa";
 import "./Match.css";
 
 class Match extends Component {
@@ -43,8 +45,8 @@ class Match extends Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+      <div className="row d-flex justify-content-center">
+        <div className="col-11 col-sm-9 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
             <span className="ml-3 mt-2">
               <span className="text-muted">Sat, Jun 16</span>
@@ -61,7 +63,7 @@ class Match extends Component {
                 />
                 <div className="media-body">
                   <h5 className="">
-                    100 Thieves <span className="float-right mt-3">1</span>
+                    100 Thieves <span className="float-right mt-2">1</span>
                     <div>
                       <small className="text-primary">Victory</small>
                     </div>
@@ -77,18 +79,29 @@ class Match extends Component {
                 />
                 <div className="media-body">
                   <h5 className="">
-                    Team Liquid <span className="float-right mt-3">0</span>
+                    Team Liquid <span className="float-right mt-2">0</span>
                     <div>
                       <small className="text-danger">Defeat</small>
                     </div>
                   </h5>
                 </div>
               </div>
+              <div className="text-center stuff">
+                <Button className="colBtn bg-transparent p-0 border-0" id="toggler">
+                  <FaAngleDown className="text-dark" />
+                </Button>
+                <UncontrolledCollapse toggler="#toggler">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Nesciunt magni, voluptas debitis similique porro a molestias
+                  consequuntur earum odio officiis natus, amet hic, iste sed
+                  dignissimos esse fuga! Minus, alias.
+                </UncontrolledCollapse>
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div className="col-11 col-sm-9 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
             <span className="ml-3 mt-2">
               <span className="text-muted">Sat, Jun 16</span>
@@ -132,7 +145,7 @@ class Match extends Component {
           </div>
         </div>
 
-        <div className="col-12 col-sm-12 col-md-6 col-lg-4">
+        <div className="col-11 col-sm-9 col-md-6 col-lg-4">
           <div className="card border-0 mt-4">
             <span className="ml-3 mt-2">
               <span className="text-muted">Sat, Jun 16</span>
@@ -153,7 +166,7 @@ class Match extends Component {
                   <h5 className="">
                     100 Thieves <span className="float-right mt-2">1</span>
                     <div>
-                      {/* <small className="text-primary gameStatus">Victory</small> */}
+                      <small className="text-primary invisible">Victory</small>
                     </div>
                   </h5>
                 </div>
@@ -169,7 +182,7 @@ class Match extends Component {
                   <h5 className="">
                     Team Liquid <span className="float-right mt-2">1</span>
                     <div>
-                      {/* <small className="text-danger gameStatus">Defeat</small> */}
+                      <small className="text-danger invisible">Defeat</small>
                     </div>
                   </h5>
                 </div>
