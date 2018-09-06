@@ -4,7 +4,6 @@ import axios from "axios";
 
 class Matches extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = { matches: [] };
   }
@@ -26,13 +25,15 @@ class Matches extends Component {
     axios
       .get(`/api/nalcs/regular/matches/:${start}/:${end}`)
       .then(response => {
-        console.log(response.data);
-        this.setState({
-          matches: response.data
-        });
+        const matches = response.data;
+        for (const match of matches) {
+          this.setState({
+            matches: this.state.matches.concat([match])
+          });
+        }
       })
       .catch(error => {
-        console.log(error.response);
+        console.log(error);
       });
   };
 

@@ -10,7 +10,7 @@ class MatchesNav extends Component {
         <div className="container-fluid maxWidth">
           <MatchLinks />
         </div>
-        <div className="container">
+        <div className="container mb-5">
           <MatchRoutes />
         </div>
       </div>

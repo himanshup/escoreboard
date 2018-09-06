@@ -1,18 +1,17 @@
 import React, { Component } from "react";
 import axios from "axios";
-import Moment from "react-moment";
-import { UncontrolledCollapse, Button, CardBody, Card } from "reactstrap";
 import { FaAngleDown } from "react-icons/fa";
 import "./Match.css";
 import "rc-collapse/assets/index.css";
 import Collapse, { Panel } from "rc-collapse";
+import moment from "moment";
 
 function expandIcon({ isActive }) {
   return (
     <FaAngleDown
       className="text-dark"
-      width="1em"
-      height="1em"
+      width="30em"
+      height="10em"
       style={{
         verticalAlign: "-.125em",
         transition: "transform .2s",
@@ -54,17 +53,26 @@ class Match extends Component {
         var status;
         if (response.data[0].status === "finished") {
           status = "Final";
-        } else if (response.data[0].status === "running") {
-          status = "&#11044; Live";
-        } else {
+        } else if (response.data[0].status === "not_started") {
           status = "Not Started";
         }
+
+        const date = moment(response.data[0].begin_at.slice(0, 10)).format(
+          "ddd, MMM D"
+        );
+        const date2 = moment(response.data[0].begin_at.slice(0, 10)).format(
+          "MMMM D, YYYY"
+        );
+        const matchName = response.data[0].name.includes("-")
+          ? response.data[0].name.replace(/-/g, " ")
+          : response.data[0].name;
         this.setState({
           matchId: response.data[0].id,
-          date: response.data[0].begin_at.slice(0, 10),
+          date: date,
+          longDate: date2,
           status: status,
           numOfGames: response.data[0].number_of_games,
-          matchName: response.data[0].name,
+          matchName: matchName,
           league: response.data[0].league.name,
           patch: response.data[0].videogame_version.name,
           tournamentName: response.data[0].tournament.name
@@ -100,61 +108,53 @@ class Match extends Component {
     return (
       <div className="card border-0 mt-4">
         <span className="ml-3 mt-2">
-          <span className="text-muted">
-            <Moment format="ddd, MMM D">{this.state.date}</Moment>
+          <span className="text-muted">{this.state.date}</span>
+          <span className="mr-3 mt-0 float-right">
+            {this.state.status === "Final" ||
+            this.state.status === "Not Started" ? (
+              this.state.status
+            ) : (
+              <span className="text-danger">&#11044; Live</span>
+            )}
           </span>
-          <span className="mr-3 mt-0 float-right">{this.state.status}</span>
         </span>
 
         <div className="card-body">
-          <div className="media">
-            <img
-              className="mr-3"
-              src={this.state.teams[0] && this.state.teams[0].image}
-              alt=""
-              width="50px"
-            />
-            <div className="media-body">
-              <h5 className="">
-                {this.state.teams[0] && this.state.teams[0].name}
-                <span className="float-right mt-2">
-                  {this.state.teams[0] && this.state.teams[0].score}
-                </span>
-                <div>
-                  <small>
-                    {this.state.teams[0] && this.state.teams[0].status}
-                  </small>
-                </div>
-              </h5>
+          {this.state.teams.map(team => (
+            <div key={team.id} className="media">
+              <img
+                className="mr-3"
+                src={
+                  team.image
+                    ? team.image
+                    : "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png"
+                }
+                alt=""
+                width="50px"
+              />
+              <div className="media-body">
+                <h5 className="">
+                  {team.name}
+                  <span className="float-right mt-2">{team.score}</span>
+                  <div>
+                    {team.status ? (
+                      <small className="text-muted">{team.status}</small>
+                    ) : (
+                      <small className="text-muted invisible">
+                        {team.status}
+                      </small>
+                    )}
+                  </div>
+                </h5>
+              </div>
             </div>
-          </div>
-          <div className="media mt-3">
-            <img
-              className="mr-3"
-              src={this.state.teams[1] && this.state.teams[1].image}
-              alt=""
-              width="50px"
-            />
-            <div className="media-body">
-              <h5 className="">
-                {this.state.teams[1] && this.state.teams[1].name}
-                <span className="float-right mt-2">
-                  {this.state.teams[1] && this.state.teams[1].score}
-                </span>
-                <div>
-                  <small>
-                    {this.state.teams[1] && this.state.teams[1].status}
-                  </small>
-                </div>
-              </h5>
-            </div>
-          </div>
+          ))}
           <Collapse
             accordion={this.state.accordion}
             onChange={this.onChange}
             activeKey={this.state.activeKey}
             expandIcon={expandIcon}
-            className="text-center bg-transparent border-0 text-dark"
+            className="text-center bg-transparent border-0"
           >
             <Panel key={this.state.matchId}>
               <div className="text-dark">
@@ -162,9 +162,7 @@ class Match extends Component {
                   {this.state.league} {this.state.tournamentName}
                 </div>
                 <div>{this.state.matchName}</div>
-                <div>
-                  <Moment format="ddd, MMM D">{this.state.date}</Moment>
-                </div>
+                <div>{this.state.longDate}</div>
                 <div>Best of {this.state.numOfGames} series</div>
                 <div>Patch: {this.state.patch}</div>
                 {/* <div className="mt-3">Game 1: Team Liquid Wins</div> */}
@@ -172,56 +170,6 @@ class Match extends Component {
             </Panel>
           </Collapse>
         </div>
-        {/* {this.state.teams[0] && this.state.teams[0].name} (
-        {this.state.teams[0] && this.state.teams[0].status}) vs.{" "}
-        {this.state.teams[1] && this.state.teams[1].name} (
-        {this.state.teams[1] && this.state.teams[1].status}) <Moment format="ddd, MMM D">{this.props.date}</Moment> */}
-
-        {/* <div className="col-11 col-sm-9 col-md-6 col-lg-4">
-          <div className="card border-0 mt-4">
-            <span className="ml-3 mt-2">
-              <span className="text-muted">Sat, Jun 16</span>
-              <span className="mr-3 mt-0 float-right text-danger">
-                &#11044; Live
-              </span>
-            </span>
-
-            <div className="card-body">
-              <div className="media">
-                <img
-                  className="mr-3"
-                  src="https://cdn.pandascore.co/images/team/image/1537/300px-100_Thieveslogo_square.png"
-                  alt=""
-                  width="50px"
-                />
-                <div className="media-body">
-                  <h5 className="">
-                    100 Thieves <span className="float-right mt-2">1</span>
-                    <div>
-                      <small className="text-primary invisible">Victory</small>
-                    </div>
-                  </h5>
-                </div>
-              </div>
-              <div className="media mt-3">
-                <img
-                  className="mr-3"
-                  src="https://cdn.pandascore.co/images/team/image/390/team-liquid-3g983dra.png"
-                  alt=""
-                  width="50px"
-                />
-                <div className="media-body">
-                  <h5 className="">
-                    Team Liquid <span className="float-right mt-2">1</span>
-                    <div>
-                      <small className="text-danger invisible">Defeat</small>
-                    </div>
-                  </h5>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
       </div>
     );
   }
