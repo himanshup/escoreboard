@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
-import MatchesNav from "../MatchesNav/MatchesNav";
 import NavBar from "../NavBar/NavBar";
+import Home from "../Home/Home";
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
         <div>
           <NavBar />
           <div className="mt-3">
-            <MatchesNav />
+            <Home />
           </div>
         </div>
       </BrowserRouter>

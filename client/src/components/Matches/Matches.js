@@ -9,21 +9,18 @@ class Matches extends Component {
   }
 
   componentDidMount() {
-    this.getMatches(this.props.start, this.props.end);
+    this.getMatches(this.props.date);
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.start !== prevProps.start &&
-      this.props.end !== prevProps.end
-    ) {
-      this.getMatches(this.props.start, this.props.end);
+    if (this.props.date !== prevProps.date) {
+      this.getMatches(this.props.date);
     }
   }
 
-  getMatches = (start, end) => {
+  getMatches = date => {
     axios
-      .get(`/api/nalcs/regular/matches/:${start}/:${end}`)
+      .get(`/api/matches/${this.props.id}/${date}`)
       .then(response => {
         const matches = response.data;
         for (const match of matches) {
