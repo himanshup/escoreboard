@@ -1,6 +1,7 @@
 import React from "react";
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Region from "../Region/Region";
+import RegionLinks from "../RegionLinks/RegionLinks";
 
 const Home = () => {
   return (
@@ -9,18 +10,9 @@ const Home = () => {
         exact
         path="/"
         render={() => {
-          return (
-            <div className="container text-center">
-              <div className="d-flex justify-content-around">
-                <Link to="/na">NA</Link>
-                <Link to="/eu">EU</Link>
-                <Link to="/lck">LCK</Link>
-              </div>
-            </div>
-          );
+          return <RegionLinks />;
         }}
       />
-
       <Route
         path="/na"
         render={props => {
@@ -37,6 +29,18 @@ const Home = () => {
         path="/lck"
         render={props => {
           return <Region seriesId="1481" {...props} />;
+        }}
+      />
+      <Route
+        path="/lpl"
+        render={props => {
+          return <Region seriesId="1513" {...props} />;
+        }}
+      />
+      <Route
+        path="/lms"
+        render={props => {
+          return <Region seriesId="1520" {...props} />;
         }}
       />
     </div>

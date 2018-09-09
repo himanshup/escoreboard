@@ -1,0 +1,25 @@
+.jumbotron {
+  min-height: 400px !important;
+}
+
+img.resize {
+  height: auto;
+  width: auto;
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.btn-outline-dark {
+  border: 2px solid !important;
+  padding-left: 65px !important;
+  padding-right: 65px !important;
+}
+
+btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: none;
+}

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
+import Collapse, { Panel } from "rc-collapse";
 import { FaAngleDown } from "react-icons/fa";
+import moment from "moment";
+import axios from "axios";
 import "./Match.css";
 import "rc-collapse/assets/index.css";
-import Collapse, { Panel } from "rc-collapse";
-import moment from "moment";
 
 function expandIcon({ isActive }) {
   return (
@@ -48,96 +48,55 @@ class Match extends Component {
   };
 
   componentDidMount() {
+    this.getMatchInfo();
+  }
+
+  getMatchInfo = () => {
+    // use match id passed in props to find match by id and store information
     axios
       .get(`/api/match/${this.props.matchId}`)
       .then(response => {
+        const match = response.data[0];
         var status;
-        if (response.data[0].status === "finished") {
+        if (match.status === "finished") {
           status = "Final";
-        } else if (response.data[0].status === "not_started") {
+        } else if (match.status === "not_started") {
           status = "Not Started";
         }
-
-        const date = moment(response.data[0].begin_at.slice(0, 10)).format(
-          "ddd, MMM D"
-        );
-        const date2 = moment(response.data[0].begin_at.slice(0, 10)).format(
+        // formats dates in a clean readable format
+        const date = moment(match.begin_at.slice(0, 10)).format("ddd, MMM D");
+        const date2 = moment(match.begin_at.slice(0, 10)).format(
           "MMMM D, YYYY"
         );
-        const matchName = response.data[0].name.includes("-")
-          ? response.data[0].name.replace(/-/g, " ")
-          : response.data[0].name;
-
-        const games = response.data[0].games.sort((a, b) => {
+        // simply removes all dashes in match names for cleaner output
+        const matchName = match.name.includes("-")
+          ? match.name.replace(/-/g, " ")
+          : match.name;
+        // sort games by position
+        const games = match.games.sort((a, b) => {
           return a.position - b.position;
         });
-
+        // loop through games and teams to find winner of each game
         for (const game of games) {
-          for (const team of response.data[0].opponents) {
-            if (team.opponent.id === game.winner.id) {
-              this.setState({
-                games: this.state.games.concat([
-                  {
-                    id: game.id,
-                    position: game.position,
-                    winner: team.opponent.name
-                  }
-                ])
-              });
-            }
-          }
-        }
-        this.setState({
-          matchId: response.data[0].id,
-          date: date,
-          longDate: date2,
-          status: status,
-          numOfGames: response.data[0].number_of_games,
-          matchName: matchName,
-          league: response.data[0].league.name,
-          patch:
-            response.data[0].videogame_version &&
-            response.data[0].videogame_version.name,
-          tournamentName: response.data[0].tournament.name
-        });
-        if (response.data[0].opponents.length === 0) {
-          for (var i = 0; i < 2; i++) {
+          if (game.winner.id === null && game.begin_at !== null) {
             this.setState({
-              teams: this.state.teams.concat([
+              games: this.state.games.concat([
                 {
-                  id: i,
-                  name: "TBD",
-                  image:
-                    "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png",
-                  score: "0",
-                  status: " "
+                  id: game.id,
+                  position: game.position,
+                  winner: false
                 }
               ])
             });
-          }
-        } else {
-          for (const team of response.data[0].opponents) {
-            for (const result of response.data[0].results) {
-              if (team.opponent.id === result.team_id) {
-                var gameStatus;
-                if (
-                  response.data[0].winner !== null &&
-                  response.data[0].winner.id === team.opponent.id
-                ) {
-                  gameStatus = "Victory";
-                } else if (response.data[0].winner === null) {
-                  gameStatus = "";
-                } else {
-                  gameStatus = "Defeat";
-                }
+          } else {
+            for (const team of match.opponents) {
+              if (team.opponent.id === game.winner.id) {
                 this.setState({
-                  teams: this.state.teams.concat([
+                  games: this.state.games.concat([
                     {
-                      id: team.opponent.id,
-                      name: team.opponent.acronym,
-                      image: team.opponent.image_url,
-                      score: result.score,
-                      status: gameStatus
+                      id: game.id,
+                      position: game.position,
+                      winner: team.opponent.name
                     }
                   ])
                 });
@@ -145,11 +104,80 @@ class Match extends Component {
             }
           }
         }
+        this.setState({
+          matchId: match.id,
+          date: date,
+          longDate: date2,
+          status: status,
+          numOfGames: match.number_of_games,
+          matchName: matchName,
+          league: match.league.name,
+          patch: match.videogame_version && match.videogame_version.name,
+          tournamentName: match.tournament.name
+        });
+        // if else statement for when there is no information on a match yet
+        // checks if length is one for when there is only one team in the opponents array
+        if (match.opponents.length === 0) {
+          for (var i = 0; i < 2; i++) {
+            this.setDummyData(i);
+          }
+        } else if (match.opponents.length === 1) {
+          this.setTeams(match);
+          this.setDummyData(0);
+        } else {
+          this.setTeams(match);
+        }
       })
       .catch(error => {
         console.log(error);
       });
-  }
+  };
+
+  // set dummy data for when the opponent hasn't been determined yet
+  setDummyData = id => {
+    this.setState({
+      teams: this.state.teams.concat([
+        {
+          id: id,
+          name: "TBD",
+          image:
+            "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png",
+          score: "0",
+          status: false
+        }
+      ])
+    });
+  };
+
+  // loop through teams and scores to see which scores belond to which teams
+  // also checks who the winner is
+  setTeams = match => {
+    for (const team of match.opponents) {
+      for (const result of match.results) {
+        if (team.opponent.id === result.team_id) {
+          var gameStatus;
+          if (match.winner !== null && match.winner.id === team.opponent.id) {
+            gameStatus = "Victory";
+          } else if (match.winner === null) {
+            gameStatus = "";
+          } else {
+            gameStatus = "Defeat";
+          }
+          this.setState({
+            teams: this.state.teams.concat([
+              {
+                id: team.opponent.id,
+                name: team.opponent.acronym,
+                image: team.opponent.image_url,
+                score: result.score,
+                status: gameStatus
+              }
+            ])
+          });
+        }
+      }
+    }
+  };
 
   render() {
     return (
@@ -161,7 +189,9 @@ class Match extends Component {
             this.state.status === "Not Started" ? (
               this.state.status
             ) : (
-              <span className="text-danger">&#11044; Live</span>
+              <span className="text-danger">
+                <span className="pulse mr-1" /> Live
+              </span>
             )}
           </span>
         </span>
@@ -180,16 +210,18 @@ class Match extends Component {
                 width="50px"
               />
               <div className="media-body">
-                <h5 className="">
+                <h5>
                   {team.name}
                   <span className="float-right mt-2">{team.score}</span>
                   <div>
                     {team.status ? (
-                      <small className="text-muted">{team.status}</small>
-                    ) : (
-                      <small className="text-muted invisible">
+                      <span className="gameStatus text-muted">
                         {team.status}
-                      </small>
+                      </span>
+                    ) : (
+                      <span className="gameStatus text-muted invisible">
+                        TBD
+                      </span>
                     )}
                   </div>
                 </h5>
@@ -215,7 +247,8 @@ class Match extends Component {
                 <div className="mt-3">
                   {this.state.games.map(game => (
                     <div key={game.id}>
-                      Game {game.position}: {game.winner} wins
+                      Game {game.position}:{" "}
+                      {game.winner ? `${game.winner} wins` : `In Progress`}
                     </div>
                   ))}
                 </div>

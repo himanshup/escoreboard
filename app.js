@@ -5,20 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const token = process.env.PANDASCORE_ACCESS_TOKEN;
 
-checkName = (region, name) => {
-  if (region === "na" && name === "regular") {
-    return "1492";
-  } else if (region === "na" && name === "playoffs") {
-    return "1493";
-  } else if (region === "na" && name === "regionals") {
-    return "1491";
-  } else if (region === "eu" && name === "regular") {
-    return "1398";
-  } else if (region === "eu" && name === "playoffs") {
-    return "1490";
-  }
-};
-
+// get series with given series id. this is needed to get all tournaments for a given series
 app.get("/api/series/:seriesId", (req, res) => {
   axios
     .get(
@@ -34,6 +21,7 @@ app.get("/api/series/:seriesId", (req, res) => {
     });
 });
 
+//get tournament with given tournament id
 app.get("/api/tournament/:id", (req, res) => {
   axios
     .get(
@@ -49,6 +37,7 @@ app.get("/api/tournament/:id", (req, res) => {
     });
 });
 
+//get matches by date
 app.get("/api/matches/:tournamentId/:date", (req, res) => {
   axios
     .get(

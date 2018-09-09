@@ -10,9 +10,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar />
-          <div className="mt-3">
-            <Home />
-          </div>
+          <Home />
         </div>
       </BrowserRouter>
     );

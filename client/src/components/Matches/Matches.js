@@ -19,11 +19,12 @@ class Matches extends Component {
   }
 
   getMatches = date => {
+    // use tournament id and date passed in props to find all matches on this date
+    // store matches and then pass to Match component to generate cards
     axios
       .get(`/api/matches/${this.props.id}/${date}`)
-      .then(response => {
-        const matches = response.data;
-        for (const match of matches) {
+      .then(matches => {
+        for (const match of matches.data) {
           this.setState({
             matches: this.state.matches.concat([match])
           });
