@@ -1,21 +1,23 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import Matches from "../Matches/Matches";
-import "./MatchesNav.css";
+import "./DatesNav.css";
 import axios from "axios";
 import moment from "moment";
 
-class MatchesNav extends Component {
+class DatesNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      dates: [],
-      currentDate: "",
-      currentIndex: 0
+      dates: []
     };
   }
 
   componentDidMount() {
+    this.getDates();
+  }
+
+  getDates = () => {
     // get tournament by id and then store the dates from each match in an array
     // also used to generate links/routes
     axios
@@ -25,14 +27,18 @@ class MatchesNav extends Component {
 
         const dates = [];
         for (const match of matches) {
-          dates.push(match.begin_at.slice(0, 10));
+          if (match.begin_at !== null) {
+            dates.push(match.begin_at.slice(0, 10));
+          }
         }
+
         const newDatesArray = this.removeDuplicates(dates);
+
         this.setState({
           dates: newDatesArray
         });
 
-        for (let [index, match] of matches.entries()) {
+        for (const [index, match] of matches.entries()) {
           if (match.status === "running") {
             this.setState({
               currentIndex: index
@@ -43,7 +49,15 @@ class MatchesNav extends Component {
               currentIndex: index
             });
             break;
-          } else {
+          } else if (tournament.data[0].winner_id !== null) {
+            this.setState({
+              currentIndex: newDatesArray.length - 1
+            });
+            break;
+          } else if (
+            tournament.data[0].winner_id == null &&
+            matches[matches.length - 1].status === "finished"
+          ) {
             this.setState({
               currentIndex: newDatesArray.length - 1
             });
@@ -54,15 +68,33 @@ class MatchesNav extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
   removeDuplicates = a => {
     return Array.from(new Set(a));
   };
 
+  getCurrentDate = () => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+
+    if (dd < 10) {
+      dd = `0${dd}`;
+    }
+
+    if (mm < 10) {
+      mm = `0${mm}`;
+    }
+    return (today = `${yyyy}-${mm}-${dd}`);
+  };
+
   render() {
-    if (this.state.dates.length === 0) {
-      return <h1 className="container text-center mt-3">No Matches Found</h1>;
+    const today = this.getCurrentDate();
+
+    if (this.state.dates.length < 1) {
+      return <h1 className="container text-center mt-4">No Matches Found</h1>;
     } else {
       return (
         <div>
@@ -75,7 +107,7 @@ class MatchesNav extends Component {
                       to={`${this.props.match.url}/${
                         this.state.dates[this.state.currentIndex - 1]
                       }`}
-                      className="lead hvr-underline-from-left"
+                      className="lead menuLinks mt-1"
                       onClick={() =>
                         this.setState({
                           currentIndex: this.state.currentIndex - 1
@@ -88,12 +120,12 @@ class MatchesNav extends Component {
                     ""
                   )}
                   {this.state.dates[this.state.currentIndex - 2] ? (
-                    <div className="col">
+                    <div className="col d-none d-lg-block">
                       <Link
                         to={`${this.props.match.url}/${
                           this.state.dates[this.state.currentIndex - 2]
                         }`}
-                        className="lead hvr-underline-from-left"
+                        className="lead hvr-underline-from-left menuLinks"
                         onClick={() =>
                           this.setState({
                             currentIndex: this.state.currentIndex - 2
@@ -106,16 +138,18 @@ class MatchesNav extends Component {
                       </Link>
                     </div>
                   ) : (
-                    <div className="col invisible">No Date</div>
+                    <div className="col invisible d-none d-lg-block">
+                      No Date
+                    </div>
                   )}
 
                   {this.state.dates[this.state.currentIndex - 1] ? (
-                    <div className="col">
+                    <div className="col d-none d-sm-block">
                       <Link
                         to={`${this.props.match.url}/${
                           this.state.dates[this.state.currentIndex - 1]
                         }`}
-                        className="lead hvr-underline-from-left"
+                        className="lead hvr-underline-from-left menuLinks"
                         onClick={() =>
                           this.setState({
                             currentIndex: this.state.currentIndex - 1
@@ -128,7 +162,9 @@ class MatchesNav extends Component {
                       </Link>
                     </div>
                   ) : (
-                    <div className="col invisible">No Date</div>
+                    <div className="col invisible d-none d-sm-block">
+                      No Date
+                    </div>
                   )}
 
                   <div className="col">
@@ -136,23 +172,27 @@ class MatchesNav extends Component {
                       to={`${this.props.match.url}/${
                         this.state.dates[this.state.currentIndex]
                       }`}
-                      className="lead hvr-underline-from-left"
+                      className="lead activeLink"
                       onClick={() =>
                         this.setState({ currentIndex: this.state.currentIndex })
                       }
                     >
-                      {moment(this.state.dates[this.state.currentIndex]).format(
-                        "ddd, MMM D"
-                      )}
+                      {this.state.dates[this.state.currentIndex] === today
+                        ? `Today, ${moment(
+                            this.state.dates[this.state.currentIndex]
+                          ).format("MMM D")}`
+                        : moment(
+                            this.state.dates[this.state.currentIndex]
+                          ).format("ddd, MMM D")}
                     </Link>
                   </div>
                   {this.state.dates[this.state.currentIndex + 1] ? (
-                    <div className="col">
+                    <div className="col d-none d-sm-block">
                       <Link
                         to={`${this.props.match.url}/${
                           this.state.dates[this.state.currentIndex + 1]
                         }`}
-                        className="lead hvr-underline-from-left"
+                        className="lead hvr-underline-from-left menuLinks"
                         onClick={() =>
                           this.setState({
                             currentIndex: this.state.currentIndex + 1
@@ -165,16 +205,18 @@ class MatchesNav extends Component {
                       </Link>
                     </div>
                   ) : (
-                    <div className="col invisible">No Date</div>
+                    <div className="col invisible d-none d-sm-block">
+                      No Date
+                    </div>
                   )}
 
                   {this.state.dates[this.state.currentIndex + 2] ? (
-                    <div className="col">
+                    <div className="col d-none d-lg-block">
                       <Link
                         to={`${this.props.match.url}/${
                           this.state.dates[this.state.currentIndex + 2]
                         }`}
-                        className="lead hvr-underline-from-left"
+                        className="lead hvr-underline-from-left menuLinks"
                         onClick={() =>
                           this.setState({
                             currentIndex: this.state.currentIndex + 2
@@ -187,21 +229,23 @@ class MatchesNav extends Component {
                       </Link>
                     </div>
                   ) : (
-                    <div className="col invisible">No Date</div>
+                    <div className="col invisible d-none d-lg-block">
+                      No Date
+                    </div>
                   )}
                   {this.state.dates[this.state.currentIndex + 1] ? (
                     <Link
                       to={`${this.props.match.url}/${
                         this.state.dates[this.state.currentIndex + 1]
                       }`}
-                      className="lead hvr-underline-from-left"
+                      className="lead menuLinks mt-1"
                       onClick={() =>
                         this.setState({
                           currentIndex: this.state.currentIndex + 1
                         })
                       }
                     >
-                      <i className="icon ion-ios-arrow-forward" />
+                      <i className="icon ion-ios-arrow-forward p-3" />
                     </Link>
                   ) : (
                     ""
@@ -212,6 +256,33 @@ class MatchesNav extends Component {
           </div>
 
           <div className="container mb-5">
+            {this.state.currentIndex !== undefined && (
+              <Route
+                exact
+                path={`${this.props.match.path}`}
+                render={() => {
+                  return (
+                    <Matches
+                      date={this.state.dates[this.state.currentIndex]}
+                      id={this.props.tournamentId}
+                    />
+                  );
+                }}
+              />
+            )}
+            {/* <Route
+              path={`${this.props.match.path}/${
+                this.state.dates[this.state.currentIndex]
+              }`}
+              render={() => {
+                return (
+                  <Matches
+                    date={this.state.dates[this.state.currentIndex]}
+                    id={this.props.tournamentId}
+                  />
+                );
+              }}
+            /> */}
             {this.state.dates.map(date => (
               <Route
                 key={date}
@@ -228,4 +299,4 @@ class MatchesNav extends Component {
   }
 }
 
-export default MatchesNav;
+export default DatesNav;

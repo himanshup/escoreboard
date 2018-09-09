@@ -36,33 +36,35 @@ class NavBar extends Component {
                 width="45"
                 className="mr-3"
               />
-              escoreboard
+              eScoreboard
             </Link>
             <NavbarToggler onClick={() => this.toggle()} />
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/components/">NA</NavLink>
+                  <Link to="/na" className="nav-link">
+                    NA
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                  <Link to="/eu" className="nav-link">
                     EU
-                  </NavLink>
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                  <Link to="/lck" className="nav-link">
                     LCK
-                  </NavLink>
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                  <Link to="/lpl" className="nav-link">
                     LPL
-                  </NavLink>
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                  <Link to="/lms" className="nav-link">
                     LMS
-                  </NavLink>
+                  </Link>
                 </NavItem>
                 <NavItem>
                   <NavLink href="https://github.com/reactstrap/reactstrap">

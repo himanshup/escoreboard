@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Collapse, { Panel } from "rc-collapse";
-import { FaAngleDown } from "react-icons/fa";
+import Ionicon from "react-ionicons";
 import moment from "moment";
 import axios from "axios";
 import "./Match.css";
@@ -8,10 +8,12 @@ import "rc-collapse/assets/index.css";
 
 function expandIcon({ isActive }) {
   return (
-    <FaAngleDown
-      className="text-dark angleDown"
+    <Ionicon
+      icon="ios-arrow-down"
+      className="text-muted"
       width="1em"
       height="1em"
+      fontSize="17px"
       style={{
         marginTop: "178px",
         verticalAlign: "-.125em",

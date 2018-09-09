@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import NavBar from "../NavBar/NavBar";
-import Home from "../Home/Home";
+import RegionRoutes from "../RegionRoutes/RegionRoutes";
 
 class App extends Component {
   render() {
@@ -10,7 +10,8 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <NavBar />
-          <Home />
+          <RegionRoutes />
+          
         </div>
       </BrowserRouter>
     );

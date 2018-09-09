@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
-import MatchesNav from "../MatchesNav/MatchesNav";
+import DatesNav from "../DatesNav/DatesNav";
 import axios from "axios";
 
 class Region extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       tournaments: [],
       dropdownOpen: false,
@@ -15,6 +16,10 @@ class Region extends Component {
   }
 
   componentDidMount() {
+    this.getSeries();
+  }
+
+  getSeries = () => {
     // get series by id and then store all tournaments, then generate links/routes based on tournament
     axios
       .get(`/api/series/${this.props.seriesId}`)
@@ -26,7 +31,7 @@ class Region extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
+  };
 
   toggle = () => {
     this.setState(prevState => ({
@@ -38,6 +43,7 @@ class Region extends Component {
     return (
       <div>
         <Route
+          exact
           path={`${this.props.match.path}`}
           render={() => {
             return (
@@ -83,7 +89,7 @@ class Region extends Component {
               key={tournament.id}
               path={`${this.props.match.path}/${tournament.name.toLowerCase()}`}
               render={props => {
-                return <MatchesNav tournamentId={tournament.id} {...props} />;
+                return <DatesNav tournamentId={tournament.id} {...props} />;
               }}
             />
           ))}
