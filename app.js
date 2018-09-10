@@ -5,14 +5,15 @@ const app = express();
 const port = process.env.PORT || 5000;
 const token = process.env.PANDASCORE_ACCESS_TOKEN;
 
+// League of Legends API calls
 // get series with given series id. this is needed to get all tournaments for a given series
-app.get("/api/series/:seriesId", (req, res) => {
+app.get("/api/:game/series/:seriesId", (req, res) => {
+  const url = `https://api.pandascore.co/${req.params.game}/series?filter[id]=${
+    req.params.seriesId
+  }&token=${token}`;
+
   axios
-    .get(
-      `https://api.pandascore.co/lol/series?filter[id]=${
-        req.params.seriesId
-      }&token=${token}`
-    )
+    .get(url)
     .then(series => {
       res.send(series.data);
     })
@@ -22,13 +23,13 @@ app.get("/api/series/:seriesId", (req, res) => {
 });
 
 //get tournament with given tournament id
-app.get("/api/tournament/:id", (req, res) => {
+app.get("/api/:game/tournament/:id", (req, res) => {
+  const url = `https://api.pandascore.co/${
+    req.params.game
+  }/tournaments?filter[id]=${req.params.id}&token=${token}`;
+
   axios
-    .get(
-      `https://api.pandascore.co/lol/tournaments?filter[id]=${
-        req.params.id
-      }&token=${token}`
-    )
+    .get(url)
     .then(response => {
       res.send(response.data);
     })
@@ -37,14 +38,16 @@ app.get("/api/tournament/:id", (req, res) => {
     });
 });
 
-//get matches by date
-app.get("/api/matches/:tournamentId/:date", (req, res) => {
+//get matches by date and tournament id
+app.get("/api/:game/matches/:tournamentId/:date", (req, res) => {
+  const url = `https://api.pandascore.co/${
+    req.params.game
+  }/matches?filter[tournament_id]=${req.params.tournamentId}&filter[begin_at]=${
+    req.params.date
+  }&sort=begin_at&token=${token}`;
+
   axios
-    .get(
-      `https://api.pandascore.co/lol/matches?filter[tournament_id]=${
-        req.params.tournamentId
-      }&filter[begin_at]=${req.params.date}&sort=begin_at&token=${token}`
-    )
+    .get(url)
     .then(response => {
       res.send(response.data);
     })
@@ -53,13 +56,14 @@ app.get("/api/matches/:tournamentId/:date", (req, res) => {
     });
 });
 
-app.get("/api/match/:matchId", (req, res) => {
+// get match by id
+app.get("/api/:game/match/:matchId", (req, res) => {
+  const url = `https://api.pandascore.co/${
+    req.params.game
+  }/matches?filter[id]=${req.params.matchId}&token=${token}`;
+
   axios
-    .get(
-      `https://api.pandascore.co/lol/matches?filter[id]=${
-        req.params.matchId
-      }&token=${token}`
-    )
+    .get(url)
     .then(response => {
       res.send(response.data);
     })

@@ -8,19 +8,21 @@ import "rc-collapse/assets/index.css";
 
 function expandIcon({ isActive }) {
   return (
-    <Ionicon
-      icon="ios-arrow-down"
-      className="text-muted"
-      width="1em"
-      height="1em"
-      fontSize="17px"
-      style={{
-        marginTop: "178px",
-        verticalAlign: "-.125em",
-        transition: "transform .2s",
-        transform: `rotate(${isActive ? 180 : 0}deg)`
-      }}
-    />
+    <div className="text-center">
+      <Ionicon
+        icon="ios-arrow-down"
+        className="text-muted"
+        width="1em"
+        height="1em"
+        fontSize="17px"
+        style={{
+          marginTop: "178px",
+          verticalAlign: "-.125em",
+          transition: "transform .2s",
+          transform: `rotate(${isActive ? 180 : 0}deg)`
+        }}
+      />
+    </div>
   );
 }
 
@@ -54,12 +56,13 @@ class Match extends Component {
   }
 
   getMatchInfo = () => {
+    let game = this.props.match.path.includes("lol") ? "lol" : "ow";
     // use match id passed in props to find match by id and store information
     axios
-      .get(`/api/match/${this.props.matchId}`)
+      .get(`/api/${game}/match/${this.props.matchId}`)
       .then(response => {
         const match = response.data[0];
-        var status;
+        let status;
         if (match.status === "finished") {
           status = "Final";
         } else if (match.status === "not_started") {
@@ -157,7 +160,7 @@ class Match extends Component {
     for (const team of match.opponents) {
       for (const result of match.results) {
         if (team.opponent.id === result.team_id) {
-          var gameStatus;
+          let gameStatus;
           if (match.winner !== null && match.winner.id === team.opponent.id) {
             gameStatus = "Victory";
           } else if (match.winner === null) {
@@ -235,13 +238,13 @@ class Match extends Component {
             onChange={this.onChange}
             activeKey={this.state.activeKey}
             expandIcon={expandIcon}
-            className="text-center bg-transparent border-0"
+            className="align-self-center bg-transparent border-0"
           >
             <Panel key={this.state.matchId}>
-              <div className="text-dark">
-                <div>
+              <div className="text-dark text-center">
+                <h5 className="card-title">
                   {this.state.league} {this.state.tournamentName}
-                </div>
+                </h5>
                 <div>{this.state.matchName}</div>
                 <div>{this.state.longDate}</div>
                 <div>Best of {this.state.numOfGames} series</div>

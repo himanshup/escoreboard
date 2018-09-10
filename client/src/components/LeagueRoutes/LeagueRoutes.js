@@ -1,6 +1,6 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Region from "../Region/Region.js";
+import Series from "../Series/Series.js";
 import LeagueHome from "../LeagueHome/LeagueHome.js";
 import LeagueLinks from "../LeagueLinks/LeagueLinks.js";
 
@@ -25,31 +25,31 @@ const LeagueRoutes = ({ match }) => {
       <Route
         path={`${match.path}/na`}
         render={props => {
-          return <Region seriesId="1482" {...props} />;
+          return <Series seriesId="1482" {...props} />;
         }}
       />
       <Route
-        path="/eu"
+        path={`${match.path}/eu`}
         render={props => {
-          return <Region seriesId="1509" {...props} />;
+          return <Series seriesId="1509" {...props} />;
         }}
       />
       <Route
-        path="/lck"
+        path={`${match.path}/lck`}
         render={props => {
-          return <Region seriesId="1481" {...props} />;
+          return <Series seriesId="1481" {...props} />;
         }}
       />
       <Route
-        path="/lpl"
+        path={`${match.path}/lpl`}
         render={props => {
-          return <Region seriesId="1513" {...props} />;
+          return <Series seriesId="1513" {...props} />;
         }}
       />
       <Route
-        path="/lms"
+        path={`${match.path}/lms`}
         render={props => {
-          return <Region seriesId="1520" {...props} />;
+          return <Series seriesId="1520" {...props} />;
         }}
       />
     </div>

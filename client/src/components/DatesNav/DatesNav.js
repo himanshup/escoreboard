@@ -16,10 +16,11 @@ class DatesNav extends Component {
   }
 
   getDates = () => {
+    let game = this.props.match.path.includes("lol") ? "lol" : "ow";
     // get tournament by id and then store the dates from each match in an array
     // also used to generate links/routes
     axios
-      .get(`/api/tournament/${this.props.tournamentId}`)
+      .get(`/api/${game}/tournament/${this.props.tournamentId}`)
       .then(tournament => {
         const matches = tournament.data[0].matches;
 
@@ -73,10 +74,10 @@ class DatesNav extends Component {
   };
 
   getCurrentDate = () => {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1;
+    let yyyy = today.getFullYear();
 
     if (dd < 10) {
       dd = `0${dd}`;
@@ -119,7 +120,9 @@ class DatesNav extends Component {
                       <i className="icon ion-ios-arrow-back p-3" />
                     </Link>
                   ) : (
-                    ""
+                    <a href="/" className="invisible lead menuLinks mt-1">
+                      <i className="icon ion-ios-arrow-back p-3" />
+                    </a>
                   )}
                   {this.state.dates[this.state.currentIndex - 2] ? (
                     <div className="col d-none d-lg-block">
@@ -250,7 +253,9 @@ class DatesNav extends Component {
                       <i className="icon ion-ios-arrow-forward p-3" />
                     </Link>
                   ) : (
-                    ""
+                    <a href="/" className="invisible lead menuLinks mt-1">
+                      <i className="icon ion-ios-arrow-forward p-3" />
+                    </a>
                   )}
                 </div>
               </div>
@@ -262,11 +267,12 @@ class DatesNav extends Component {
               <Route
                 exact
                 path={`${this.props.match.path}`}
-                render={() => {
+                render={props => {
                   return (
                     <Matches
                       date={this.state.dates[this.state.currentIndex]}
                       id={this.props.tournamentId}
+                      {...props}
                     />
                   );
                 }}
@@ -277,8 +283,14 @@ class DatesNav extends Component {
               <Route
                 key={date}
                 path={`${this.props.match.path}/${date}`}
-                render={() => {
-                  return <Matches date={date} id={this.props.tournamentId} />;
+                render={props => {
+                  return (
+                    <Matches
+                      date={date}
+                      id={this.props.tournamentId}
+                      {...props}
+                    />
+                  );
                 }}
               />
             ))}

@@ -20,12 +20,16 @@ class Matches extends Component {
   }
 
   getMatches = async date => {
+    let game = this.props.match.path.includes("lol") ? "lol" : "ow";
     // use tournament id and date passed in props to find all matches on this date
     // store matches and then pass to Match component to generate cards
     try {
-      const matches = await axios.get(`/api/matches/${this.props.id}/${date}`, {
-        cancelToken: this.cancelTokenSource.token
-      });
+      const matches = await axios.get(
+        `/api/${game}/matches/${this.props.id}/${date}`,
+        {
+          cancelToken: this.cancelTokenSource.token
+        }
+      );
       for (const match of matches.data) {
         this.setState({
           matches: this.state.matches.concat([match])
@@ -52,7 +56,7 @@ class Matches extends Component {
         <div className="row d-flex justify-content-center">
           {this.state.matches.map(match => (
             <div className="col-11 col-sm-9 col-md-6 col-lg-4" key={match.id}>
-              <Match matchId={match.id} />
+              <Match matchId={match.id} {...this.props} />
             </div>
           ))}
         </div>

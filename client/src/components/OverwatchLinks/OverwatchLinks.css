@@ -1,0 +1,16 @@
+.btn-outline-dark {
+  border: 2px solid !important;
+}
+
+btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: none;
+}
+.btn-outline-dark:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}

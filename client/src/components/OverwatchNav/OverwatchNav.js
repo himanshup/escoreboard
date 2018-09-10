@@ -11,7 +11,6 @@ import {
 
 class OwerwatcNav extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       isOpen: false
@@ -34,14 +33,21 @@ class OwerwatcNav extends Component {
             </Link>
             <NavbarToggler onClick={() => this.toggle()} />
             <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="mr-auto" navbar>
+                <NavItem>
+                  <Link to={`${this.props.match.url}`} className="nav-link">
+                    Home
+                  </Link>
+                </NavItem>
+              </Nav>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="/owl" className="nav-link">
+                  <Link to={`${this.props.match.url}/owl`} className="nav-link">
                     OW League
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/wc" className="nav-link">
+                  <Link to={`${this.props.match.url}/wc`} className="nav-link">
                     World Cup
                   </Link>
                 </NavItem>

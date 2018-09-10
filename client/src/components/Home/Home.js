@@ -10,7 +10,7 @@ const Home = () => {
         <h1 className="display-4">
           <i className="icon ion-logo-game-controller-b" />
         </h1>
-        <div className="row d-flex justify-content-center">
+        <div className="row d-flex justify-content-center mt-5">
           <div className="col-10 col-md-4 col-lg-3">
             <Link
               to="/lol"

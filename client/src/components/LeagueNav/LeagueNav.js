@@ -11,7 +11,6 @@ import {
 
 class LeagueNav extends Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       isOpen: false
@@ -30,33 +29,40 @@ class LeagueNav extends Component {
         <Navbar dark expand="md">
           <div className="container">
             <Link to="/" className="navbar-brand">
-              eScoreboard
+              eScoreboard | LoL
             </Link>
             <NavbarToggler onClick={() => this.toggle()} />
             <Collapse isOpen={this.state.isOpen} navbar>
+              <Nav className="mr-auto" navbar>
+                <NavItem>
+                  <Link to={`${this.props.match.url}`} className="nav-link">
+                    Home
+                  </Link>
+                </NavItem>
+              </Nav>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="/na" className="nav-link">
+                  <Link to={`${this.props.match.url}/na`} className="nav-link">
                     NA
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/eu" className="nav-link">
+                  <Link to={`${this.props.match.url}/eu`} className="nav-link">
                     EU
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/lck" className="nav-link">
+                  <Link to={`${this.props.match.url}/lck`} className="nav-link">
                     LCK
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/lpl" className="nav-link">
+                  <Link to={`${this.props.match.url}/lpl`} className="nav-link">
                     LPL
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/lms" className="nav-link">
+                  <Link to={`${this.props.match.url}/lms`} className="nav-link">
                     LMS
                   </Link>
                 </NavItem>
