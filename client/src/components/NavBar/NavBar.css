@@ -1,4 +1,12 @@
 .navbar {
   min-height: 70px;
-  background: #1a1a1a;
+  background: #222823;
+}
+
+button.navbar-toggler {
+  outline: none !important;
+}
+
+.navbar-dark .navbar-toggler {
+  border-color: transparent;
 }

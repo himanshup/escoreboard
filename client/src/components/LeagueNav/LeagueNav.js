@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import "./NavBar.css";
 import {
   Collapse,
   Navbar,
@@ -10,7 +9,7 @@ import {
   NavLink
 } from "reactstrap";
 
-class NavBar extends Component {
+class LeagueNav extends Component {
   constructor(props) {
     console.log(props);
     super(props);
@@ -37,18 +36,28 @@ class NavBar extends Component {
             <Collapse isOpen={this.state.isOpen} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to="/lol" className="nav-link">
-                    LoL
+                  <Link to="/na" className="nav-link">
+                    NA
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/ow" className="nav-link">
-                    Overwatch
+                  <Link to="/eu" className="nav-link">
+                    EU
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/dota" className="nav-link">
-                    Dota
+                  <Link to="/lck" className="nav-link">
+                    LCK
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/lpl" className="nav-link">
+                    LPL
+                  </Link>
+                </NavItem>
+                <NavItem>
+                  <Link to="/lms" className="nav-link">
+                    LMS
                   </Link>
                 </NavItem>
                 <NavItem>
@@ -70,4 +79,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default LeagueNav;

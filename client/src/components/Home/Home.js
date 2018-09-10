@@ -1,45 +1,42 @@
 import React from "react";
-import RegionLinks from "../RegionLinks/RegionLinks";
-import "./Home.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <div>
-      <div className="jumbotron text-center rounded-0 bg-transparent">
+      <div className="container text-center ">
         <h1 className="display-4 mt-5">eScoreboard</h1>
-        <p className="lead">League of Legends</p>
-        <div className="mt-4">
-          <div className="row d-flex justify-content-center">
-            <img
-              src="https://cdn.pandascore.co/images/league/image/289/na-lcs-g63ljv52.png"
-              alt=""
-              className="resize"
-            />
-            <img
-              src="https://cdn.pandascore.co/images/league/image/290/eu-lcs-b29u5nim.png"
-              alt=""
-              className="resize"
-            />
-            <img
-              src="https://cdn.pandascore.co/images/league/image/293/LCK_2018_logo.png"
-              alt=""
-              className="resize"
-            />
-            <img
-              src="https://cdn.pandascore.co/images/league/image/294/lpl-china-6ygsd4c8.png"
-              alt=""
-              className="resize"
-            />
-            <img
-              src="https://cdn.pandascore.co/images/league/image/295/b030bfca-cac7-11e7-92d4-0e6c723feec8.png"
-              alt=""
-              className="resize"
-            />
+        <p className="lead">Scoreboard for various eSports games.</p>
+        <h1 className="display-4">
+          <i className="icon ion-logo-game-controller-b" />
+        </h1>
+        <div className="row d-flex justify-content-center">
+          <div className="col-10 col-md-4 col-lg-3">
+            <Link
+              to="/lol"
+              className="btn btn-lg btn-block btn-secondary mt-4"
+            >
+              League of Legends
+            </Link>
+          </div>
+          <div className="col-10 col-md-4 col-lg-3">
+            <Link
+              to="/ow"
+              className="btn btn-lg btn-block btn-warning mt-4"
+            >
+              Overwatch
+            </Link>
+          </div>
+          <div className="col-10 col-md-4 col-lg-3">
+            <Link
+              to="/dota"
+              className="btn btn-lg btn-block btn-danger mt-4 disabled"
+            >
+              Dota
+            </Link>
           </div>
         </div>
       </div>
-
-      <RegionLinks />
     </div>
   );
 };

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
-import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import DatesNav from "../DatesNav/DatesNav";
 import axios from "axios";
 
@@ -11,7 +10,9 @@ class Region extends Component {
     this.state = {
       tournaments: [],
       dropdownOpen: false,
-      activeTournament: ""
+      name: "",
+      logo: "",
+      seeason: ""
     };
   }
 
@@ -24,7 +25,11 @@ class Region extends Component {
     axios
       .get(`/api/series/${this.props.seriesId}`)
       .then(series => {
+        console.log(series.data[0]);
         this.setState({
+          name: series.data[0].league.name,
+          logo: series.data[0].league.image_url,
+          season: series.data[0].full_name,
           tournaments: series.data[0].tournaments
         });
       })
@@ -47,24 +52,21 @@ class Region extends Component {
           path={`${this.props.match.path}`}
           render={() => {
             return (
-              <div className="container-fluid mt-3">
-                <Dropdown
-                  isOpen={this.state.dropdownOpen}
-                  toggle={() => this.toggle()}
-                >
-                  <DropdownToggle className="btn btn-lg btn-dark " caret>
-                    {this.state.activeTournament
-                      ? this.state.activeTournament
-                      : "Select Tournament"}
-                  </DropdownToggle>
-                  <DropdownMenu className="shadow-sm border-0 rounded-0">
-                    {this.state.tournaments.map(tournament => (
+              <div className="container mt-3 text-center">
+                <h1>{this.state.name}</h1>
+                <p className="lead">{this.state.season}</p>
+                <img src={this.state.logo} alt="" width="150" />
+                <div className="row d-flex justify-content-center">
+                  {this.state.tournaments.map(tournament => (
+                    <div
+                      key={tournament.id}
+                      className="col-12 col-md-4 col-lg-3"
+                    >
                       <Link
-                        key={tournament.id}
                         to={`${
                           this.props.match.url
                         }/${tournament.name.toLowerCase()}`}
-                        className="dropdown-item"
+                        className="btn btn-lg btn-outline-dark mt-4"
                         onClick={() =>
                           this.setState({
                             activeTournament: `${tournament.name}`
@@ -75,9 +77,9 @@ class Region extends Component {
                           {tournament.name}
                         </span>
                       </Link>
-                    ))}
-                  </DropdownMenu>
-                </Dropdown>
+                    </div>
+                  ))}
+                </div>
               </div>
             );
           }}

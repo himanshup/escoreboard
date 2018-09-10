@@ -1,7 +1,5 @@
 .btn-outline-dark {
   border: 2px solid !important;
-  padding-left: 65px !important;
-  padding-right: 65px !important;
 }
 
 btn:focus,
@@ -11,4 +9,8 @@ btn:focus,
 .btn:active.focus,
 .btn.active.focus {
   outline: none;
+}
+.btn-outline-dark:focus {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
 }

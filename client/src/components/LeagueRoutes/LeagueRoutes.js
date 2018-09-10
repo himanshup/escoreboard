@@ -1,14 +1,29 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import Region from "../Region/Region";
-import Home from "../Home/Home";
+import Region from "../Region/Region.js";
+import LeagueHome from "../LeagueHome/LeagueHome.js";
+import LeagueLinks from "../LeagueLinks/LeagueLinks.js";
 
-const RegionRoutes = () => {
+const LeagueRoutes = ({ match }) => {
   return (
     <div>
-      <Route exact path="/" component={Home} />
       <Route
-        path="/na"
+        exact
+        path={match.path}
+        render={props => {
+          return <LeagueHome {...props} />;
+        }}
+      />
+      <Route
+        exact
+        path={match.path}
+        render={props => {
+          return <LeagueLinks {...props} />;
+        }}
+      />
+
+      <Route
+        path={`${match.path}/na`}
         render={props => {
           return <Region seriesId="1482" {...props} />;
         }}
@@ -41,4 +56,4 @@ const RegionRoutes = () => {
   );
 };
 
-export default RegionRoutes;
+export default LeagueRoutes;
