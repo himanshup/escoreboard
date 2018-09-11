@@ -1,12 +1,12 @@
 .navbar {
-  min-height: 70px;
+  min-height: 65px;
   background: #222823;
 }
 
 .navbar-brand {
   padding: 0 15px;
-  height: 70px;
-  line-height: 70px;
+  height: 65px;
+  line-height: 65px;
 }
 
 button.navbar-toggler {

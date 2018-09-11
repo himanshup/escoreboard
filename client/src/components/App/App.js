@@ -3,7 +3,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import "./App.css";
 import NavBar from "../NavBar/NavBar";
 import Home from "../Home/Home.js";
-import About from "../About/About.js";
 import LeagueNav from "../LeagueNav/LeagueNav.js";
 import LeagueRoutes from "../LeagueRoutes/LeagueRoutes.js";
 import OverwatchNav from "../OverwatchNav/OverwatchNav.js";
@@ -27,10 +26,11 @@ class App extends Component {
             path="/"
             render={() => {
               return (
-                <div className={css(styles.fadeIn)}>
+                <div>
                   <NavBar />
-
-                  <Home />
+                  <div className={css(styles.fadeIn)}>
+                    <Home />
+                  </div>
                 </div>
               );
             }}
@@ -57,7 +57,6 @@ class App extends Component {
               );
             }}
           />
-          <Route path="/about" component={About} />
         </div>
       </BrowserRouter>
     );
