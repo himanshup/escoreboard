@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import Match from "../Match/Match";
 import axios from "axios";
-import Loading from "../Loading/Loading.js";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Matches.css";
 
 class Matches extends Component {

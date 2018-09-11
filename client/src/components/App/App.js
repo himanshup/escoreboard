@@ -7,15 +7,17 @@ import LeagueNav from "../LeagueNav/LeagueNav.js";
 import LeagueRoutes from "../LeagueRoutes/LeagueRoutes.js";
 import OverwatchNav from "../OverwatchNav/OverwatchNav.js";
 import OverwatchRoutes from "../OverwatchRoutes/OverwatchRoutes.js";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+// import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { fadeIn } from "react-animations";
 import { StyleSheet, css } from "aphrodite";
+
 const styles = StyleSheet.create({
   fadeIn: {
     animationName: fadeIn,
     animationDuration: "1s"
   }
 });
+
 class App extends Component {
   render() {
     return (

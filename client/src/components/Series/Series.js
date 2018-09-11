@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link, Route } from "react-router-dom";
 import DatesNav from "../DatesNav/DatesNav";
-import Loading from "../Loading/Loading.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import "./Series.css";
 import axios from "axios";
