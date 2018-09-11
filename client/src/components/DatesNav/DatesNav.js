@@ -17,13 +17,13 @@ class DatesNav extends Component {
 
   getDates = () => {
     let game = this.props.match.path.includes("lol") ? "lol" : "ow";
+
     // get tournament by id and then store the dates from each match in an array
     // also used to generate links/routes
     axios
       .get(`/api/${game}/tournament/${this.props.tournamentId}`)
       .then(tournament => {
         const matches = tournament.data[0].matches;
-
         const dates = [];
         for (const match of matches) {
           if (match.begin_at !== null) {
@@ -37,6 +37,7 @@ class DatesNav extends Component {
           dates: newDatesArray
         });
 
+        // determining what the current index should be
         for (const [index, match] of matches.entries()) {
           if (match.status === "running") {
             this.setState({
@@ -69,6 +70,14 @@ class DatesNav extends Component {
       });
   };
 
+  getCurrentIndexFromStorage = () => {
+    const index = localStorage.getItem("currentIndex");
+    console.log(index);
+    this.setState({
+      currentIndex: index
+    });
+  };
+
   removeDuplicates = a => {
     return Array.from(new Set(a));
   };
@@ -94,7 +103,7 @@ class DatesNav extends Component {
 
     if (this.state.dates.length < 1) {
       return (
-        <div className="container text-center mt-4 d-flex justify-content-center">
+        <div className="container text-center mt-4">
           <h1>No Matches</h1>
         </div>
       );
@@ -179,7 +188,9 @@ class DatesNav extends Component {
                       }`}
                       className="lead activeLink"
                       onClick={() =>
-                        this.setState({ currentIndex: this.state.currentIndex })
+                        this.setState({
+                          currentIndex: this.state.currentIndex
+                        })
                       }
                     >
                       {this.state.dates[this.state.currentIndex] === today

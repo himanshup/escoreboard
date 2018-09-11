@@ -46,7 +46,7 @@ class NavBar extends Component {
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to="/dota" className="nav-link">
+                  <Link to="/" className="nav-link">
                     Dota
                   </Link>
                 </NavItem>

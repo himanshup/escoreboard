@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import Match from "../Match/Match";
 import axios from "axios";
-
+import Loading from "../Loading/Loading.js";
 class Matches extends Component {
   constructor(props) {
     super(props);
-    this.state = { matches: [], isMounted: false };
+    this.state = { matches: [], loading: true };
     this.cancelTokenSource = axios.CancelToken.source();
   }
 
@@ -42,6 +42,9 @@ class Matches extends Component {
         throw err;
       }
     } finally {
+      this.setState({
+        loading: false
+      });
       this.cancelTokenSource = null;
     }
   };
@@ -53,13 +56,17 @@ class Matches extends Component {
   render() {
     return (
       <div>
-        <div className="row d-flex justify-content-center">
-          {this.state.matches.map(match => (
-            <div className="col-11 col-sm-9 col-md-6 col-lg-4" key={match.id}>
-              <Match matchId={match.id} {...this.props} />
-            </div>
-          ))}
-        </div>
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <div className="row d-flex justify-content-center">
+            {this.state.matches.map(match => (
+              <div className="col-11 col-sm-9 col-md-6 col-lg-4" key={match.id}>
+                <Match matchId={match.id} {...this.props} />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }

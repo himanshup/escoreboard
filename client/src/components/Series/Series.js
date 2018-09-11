@@ -14,7 +14,10 @@ class Series extends Component {
       dropdownOpen: false,
       name: "",
       logo: "",
-      seeason: ""
+      year: "",
+      badgeColor: "",
+      startDate: "",
+      endDate: ""
     };
   }
 
@@ -27,18 +30,18 @@ class Series extends Component {
     // get series by id and then store all tournaments, then generate links/routes based on tournament
     axios
       .get(`/api/${game}/series/${this.props.seriesId}`)
-      .then(series => {
-        console.log(series.data[0]);
+      .then(response => {
+        const series = response.data[0];
         this.setState({
-          name: series.data[0].league.name,
-          logo: series.data[0].league.image_url,
-          season: series.data[0].full_name,
-          tournaments: series.data[0].tournaments,
-          startDate: moment(series.data[0].begin_at.slice(0, 10)).format(
-            "MM/DD/YYYY"
-          ),
-          endDate: series.data[0].end_at
-            ? moment(series.data[0].end_at.slice(0, 10)).format("MM/DD/YYYY")
+          name: series.league.name,
+          logo: series.league.image_url,
+          year: series.year,
+          badgeColor:
+            series.videogame.id === 1 ? "badge-primary" : "badge-warning",
+          tournaments: series.tournaments,
+          startDate: moment(series.begin_at.slice(0, 10)).format("MM/DD/YYYY"),
+          endDate: series.end_at
+            ? moment(series.end_at.slice(0, 10)).format("MM/DD/YYYY")
             : ""
         });
       })
@@ -62,7 +65,7 @@ class Series extends Component {
           render={() => {
             return (
               <div className="container mt-3">
-                <div className="row">
+                <div className="row ">
                   <div className="col" />
                   <div className="col-12 col-md-10 col-lg-8">
                     <div className="card border-0">
@@ -76,12 +79,13 @@ class Series extends Component {
                           />
                           <div className="media-body align-self-center">
                             <h4>{this.state.name}</h4>
-                            <div className="text-muted">
-                              {this.state.season}
-                            </div>
-                            <div className="text-muted">
-                              {this.state.startDate} - {this.state.endDate}
-                            </div>
+                            <span
+                              className={`badge ${
+                                this.state.badgeColor
+                              } shadow-sm`}
+                            >
+                              {this.state.year}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -92,9 +96,20 @@ class Series extends Component {
                             to={`${
                               this.props.match.url
                             }/${tournament.name.toLowerCase()}`}
-                            className="text-capitalize lead list-group-item list-group-item-action"
+                            className="list-group-item list-group-item-action"
                           >
-                            {tournament.name}
+                            {tournament.name}{" "}
+                            <small className="text-muted float-right">
+                              {moment(tournament.begin_at.slice(0, 10)).format(
+                                "MMM D"
+                              )}{" "}
+                              -{" "}
+                              {tournament.end_at
+                                ? moment(tournament.end_at.slice(0, 10)).format(
+                                    "MMM D"
+                                  )
+                                : ""}
+                            </small>
                           </Link>
                         ))}
                       </ul>

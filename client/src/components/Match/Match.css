@@ -3,6 +3,9 @@
   transition: transform 0.44s, box-shadow 0.44s, color 0.77s 0.77s;
   min-height: 200px;
 }
+.badge-light {
+  background: #F2F2F3 !important;
+}
 
 .rc-collapse-header {
   height: 200px !important;
