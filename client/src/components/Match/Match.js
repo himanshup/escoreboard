@@ -139,11 +139,9 @@ class Match extends Component {
         }
       })
       .then(response => {
-        setTimeout(() => {
-          this.setState({
-            loading: false
-          });
-        }, 1000);
+        this.setState({
+          loading: false
+        });
       })
       .catch(error => {
         console.log(error);
@@ -240,17 +238,7 @@ class Match extends Component {
           >
             <div className="card border-0 mt-4 hvr-float">
               <span className="ml-3 mt-2">
-                <span className="text-muted">
-                  <ReactCSSTransitionGroup
-                    transitionName="example"
-                    transitionAppear={true}
-                    transitionAppearTimeout={600}
-                    transitionEnter={false}
-                    transitionLeave={false}
-                  >
-                    {this.state.date}{" "}
-                  </ReactCSSTransitionGroup>
-                </span>
+                <span className="text-muted">{this.state.date} </span>
 
                 <span
                   className={`mr-3 mt-0 float-right ${

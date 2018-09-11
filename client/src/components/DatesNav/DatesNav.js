@@ -4,11 +4,12 @@ import Matches from "../Matches/Matches";
 import "./DatesNav.css";
 import axios from "axios";
 import moment from "moment";
+import Loading from "../Loading/Loading";
 
 class DatesNav extends Component {
   constructor(props) {
     super(props);
-    this.state = { dates: [] };
+    this.state = { dates: [], loading: true };
   }
 
   componentDidMount() {
@@ -65,6 +66,11 @@ class DatesNav extends Component {
           }
         }
       })
+      .then(response => {
+        this.setState({
+          loading: false
+        });
+      })
       .catch(error => {
         console.log(error);
       });
@@ -100,215 +106,220 @@ class DatesNav extends Component {
 
   render() {
     const today = this.getCurrentDate();
+    return (
+      <div>
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <div>
+            {this.state.dates < 1 ? (
+              <div className="container text-center mt-4">
+                <h1>No Matches</h1>
+              </div>
+            ) : (
+              <div>
+                <div className="container-fluid maxWidth mt-3">
+                  <div id="menu" className="p-3 text-center shadow-sm">
+                    <div className="container">
+                      <div className="row d-flex justify-content-center">
+                        {this.state.dates[this.state.currentIndex - 1] ? (
+                          <Link
+                            to={`${this.props.match.url}/${
+                              this.state.dates[this.state.currentIndex - 1]
+                            }`}
+                            className="lead menuLinks mt-1"
+                            onClick={() =>
+                              this.setState({
+                                currentIndex: this.state.currentIndex - 1
+                              })
+                            }
+                          >
+                            <i className="icon ion-ios-arrow-back p-3" />
+                          </Link>
+                        ) : (
+                          <a href="/" className="invisible lead menuLinks mt-1">
+                            <i className="icon ion-ios-arrow-back p-3" />
+                          </a>
+                        )}
+                        {this.state.dates[this.state.currentIndex - 2] ? (
+                          <div className="col d-none d-lg-block">
+                            <Link
+                              to={`${this.props.match.url}/${
+                                this.state.dates[this.state.currentIndex - 2]
+                              }`}
+                              className="lead hvr-underline-from-center menuLinks"
+                              onClick={() =>
+                                this.setState({
+                                  currentIndex: this.state.currentIndex - 2
+                                })
+                              }
+                            >
+                              {moment(
+                                this.state.dates[this.state.currentIndex - 2]
+                              ).format("ddd, MMM D")}
+                            </Link>
+                          </div>
+                        ) : (
+                          <div className="col invisible d-none d-lg-block">
+                            No Date
+                          </div>
+                        )}
 
-    if (this.state.dates.length < 1) {
-      return (
-        <div className="container text-center mt-4">
-          <h1>No Matches</h1>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <div className="container-fluid maxWidth mt-3">
-            <div id="menu" className="p-3 text-center shadow-sm">
-              <div className="container">
-                <div className="row d-flex justify-content-center">
-                  {this.state.dates[this.state.currentIndex - 1] ? (
-                    <Link
-                      to={`${this.props.match.url}/${
-                        this.state.dates[this.state.currentIndex - 1]
-                      }`}
-                      className="lead menuLinks mt-1"
-                      onClick={() =>
-                        this.setState({
-                          currentIndex: this.state.currentIndex - 1
-                        })
-                      }
-                    >
-                      <i className="icon ion-ios-arrow-back p-3" />
-                    </Link>
-                  ) : (
-                    <a href="/" className="invisible lead menuLinks mt-1">
-                      <i className="icon ion-ios-arrow-back p-3" />
-                    </a>
-                  )}
-                  {this.state.dates[this.state.currentIndex - 2] ? (
-                    <div className="col d-none d-lg-block">
-                      <Link
-                        to={`${this.props.match.url}/${
-                          this.state.dates[this.state.currentIndex - 2]
-                        }`}
-                        className="lead hvr-underline-from-center menuLinks"
-                        onClick={() =>
-                          this.setState({
-                            currentIndex: this.state.currentIndex - 2
-                          })
-                        }
-                      >
-                        {moment(
-                          this.state.dates[this.state.currentIndex - 2]
-                        ).format("ddd, MMM D")}
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="col invisible d-none d-lg-block">
-                      No Date
-                    </div>
-                  )}
+                        {this.state.dates[this.state.currentIndex - 1] ? (
+                          <div className="col d-none d-sm-block">
+                            <Link
+                              to={`${this.props.match.url}/${
+                                this.state.dates[this.state.currentIndex - 1]
+                              }`}
+                              className="lead hvr-underline-from-center menuLinks"
+                              onClick={() =>
+                                this.setState({
+                                  currentIndex: this.state.currentIndex - 1
+                                })
+                              }
+                            >
+                              {moment(
+                                this.state.dates[this.state.currentIndex - 1]
+                              ).format("ddd, MMM D")}
+                            </Link>
+                          </div>
+                        ) : (
+                          <div className="col invisible d-none d-sm-block">
+                            No Date
+                          </div>
+                        )}
 
-                  {this.state.dates[this.state.currentIndex - 1] ? (
-                    <div className="col d-none d-sm-block">
-                      <Link
-                        to={`${this.props.match.url}/${
-                          this.state.dates[this.state.currentIndex - 1]
-                        }`}
-                        className="lead hvr-underline-from-center menuLinks"
-                        onClick={() =>
-                          this.setState({
-                            currentIndex: this.state.currentIndex - 1
-                          })
-                        }
-                      >
-                        {moment(
-                          this.state.dates[this.state.currentIndex - 1]
-                        ).format("ddd, MMM D")}
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="col invisible d-none d-sm-block">
-                      No Date
-                    </div>
-                  )}
+                        <div className="col">
+                          <Link
+                            to={`${this.props.match.url}/${
+                              this.state.dates[this.state.currentIndex]
+                            }`}
+                            className="lead activeLink"
+                            onClick={() =>
+                              this.setState({
+                                currentIndex: this.state.currentIndex
+                              })
+                            }
+                          >
+                            {this.state.dates[this.state.currentIndex] === today
+                              ? `Today, ${moment(
+                                  this.state.dates[this.state.currentIndex]
+                                ).format("MMM D")}`
+                              : moment(
+                                  this.state.dates[this.state.currentIndex]
+                                ).format("ddd, MMM D")}
+                          </Link>
+                        </div>
+                        {this.state.dates[this.state.currentIndex + 1] ? (
+                          <div className="col d-none d-sm-block">
+                            <Link
+                              to={`${this.props.match.url}/${
+                                this.state.dates[this.state.currentIndex + 1]
+                              }`}
+                              className="lead hvr-underline-from-center menuLinks"
+                              onClick={() =>
+                                this.setState({
+                                  currentIndex: this.state.currentIndex + 1
+                                })
+                              }
+                            >
+                              {moment(
+                                this.state.dates[this.state.currentIndex + 1]
+                              ).format("ddd, MMM D")}
+                            </Link>
+                          </div>
+                        ) : (
+                          <div className="col invisible d-none d-sm-block">
+                            No Date
+                          </div>
+                        )}
 
-                  <div className="col">
-                    <Link
-                      to={`${this.props.match.url}/${
-                        this.state.dates[this.state.currentIndex]
-                      }`}
-                      className="lead activeLink"
-                      onClick={() =>
-                        this.setState({
-                          currentIndex: this.state.currentIndex
-                        })
-                      }
-                    >
-                      {this.state.dates[this.state.currentIndex] === today
-                        ? `Today, ${moment(
-                            this.state.dates[this.state.currentIndex]
-                          ).format("MMM D")}`
-                        : moment(
-                            this.state.dates[this.state.currentIndex]
-                          ).format("ddd, MMM D")}
-                    </Link>
+                        {this.state.dates[this.state.currentIndex + 2] ? (
+                          <div className="col d-none d-lg-block">
+                            <Link
+                              to={`${this.props.match.url}/${
+                                this.state.dates[this.state.currentIndex + 2]
+                              }`}
+                              className="lead hvr-underline-from-center menuLinks"
+                              onClick={() =>
+                                this.setState({
+                                  currentIndex: this.state.currentIndex + 2
+                                })
+                              }
+                            >
+                              {moment(
+                                this.state.dates[this.state.currentIndex + 2]
+                              ).format("ddd, MMM D")}
+                            </Link>
+                          </div>
+                        ) : (
+                          <div className="col invisible d-none d-lg-block">
+                            No Date
+                          </div>
+                        )}
+                        {this.state.dates[this.state.currentIndex + 1] ? (
+                          <Link
+                            to={`${this.props.match.url}/${
+                              this.state.dates[this.state.currentIndex + 1]
+                            }`}
+                            className="lead menuLinks mt-1"
+                            onClick={() =>
+                              this.setState({
+                                currentIndex: this.state.currentIndex + 1
+                              })
+                            }
+                          >
+                            <i className="icon ion-ios-arrow-forward p-3" />
+                          </Link>
+                        ) : (
+                          <a href="/" className="invisible lead menuLinks mt-1">
+                            <i className="icon ion-ios-arrow-forward p-3" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  {this.state.dates[this.state.currentIndex + 1] ? (
-                    <div className="col d-none d-sm-block">
-                      <Link
-                        to={`${this.props.match.url}/${
-                          this.state.dates[this.state.currentIndex + 1]
-                        }`}
-                        className="lead hvr-underline-from-center menuLinks"
-                        onClick={() =>
-                          this.setState({
-                            currentIndex: this.state.currentIndex + 1
-                          })
-                        }
-                      >
-                        {moment(
-                          this.state.dates[this.state.currentIndex + 1]
-                        ).format("ddd, MMM D")}
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="col invisible d-none d-sm-block">
-                      No Date
-                    </div>
+                </div>
+
+                <div className="container mb-5">
+                  {this.state.currentIndex !== undefined && (
+                    <Route
+                      exact
+                      path={`${this.props.match.path}`}
+                      render={props => {
+                        return (
+                          <Matches
+                            date={this.state.dates[this.state.currentIndex]}
+                            id={this.props.tournamentId}
+                            {...props}
+                          />
+                        );
+                      }}
+                    />
                   )}
 
-                  {this.state.dates[this.state.currentIndex + 2] ? (
-                    <div className="col d-none d-lg-block">
-                      <Link
-                        to={`${this.props.match.url}/${
-                          this.state.dates[this.state.currentIndex + 2]
-                        }`}
-                        className="lead hvr-underline-from-center menuLinks"
-                        onClick={() =>
-                          this.setState({
-                            currentIndex: this.state.currentIndex + 2
-                          })
-                        }
-                      >
-                        {moment(
-                          this.state.dates[this.state.currentIndex + 2]
-                        ).format("ddd, MMM D")}
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="col invisible d-none d-lg-block">
-                      No Date
-                    </div>
-                  )}
-                  {this.state.dates[this.state.currentIndex + 1] ? (
-                    <Link
-                      to={`${this.props.match.url}/${
-                        this.state.dates[this.state.currentIndex + 1]
-                      }`}
-                      className="lead menuLinks mt-1"
-                      onClick={() =>
-                        this.setState({
-                          currentIndex: this.state.currentIndex + 1
-                        })
-                      }
-                    >
-                      <i className="icon ion-ios-arrow-forward p-3" />
-                    </Link>
-                  ) : (
-                    <a href="/" className="invisible lead menuLinks mt-1">
-                      <i className="icon ion-ios-arrow-forward p-3" />
-                    </a>
-                  )}
+                  {this.state.dates.map(date => (
+                    <Route
+                      key={date}
+                      path={`${this.props.match.path}/${date}`}
+                      render={props => {
+                        return (
+                          <Matches
+                            date={date}
+                            id={this.props.tournamentId}
+                            {...props}
+                          />
+                        );
+                      }}
+                    />
+                  ))}
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="container mb-5">
-            {this.state.currentIndex !== undefined && (
-              <Route
-                exact
-                path={`${this.props.match.path}`}
-                render={props => {
-                  return (
-                    <Matches
-                      date={this.state.dates[this.state.currentIndex]}
-                      id={this.props.tournamentId}
-                      {...props}
-                    />
-                  );
-                }}
-              />
             )}
-
-            {this.state.dates.map(date => (
-              <Route
-                key={date}
-                path={`${this.props.match.path}/${date}`}
-                render={props => {
-                  return (
-                    <Matches
-                      date={date}
-                      id={this.props.tournamentId}
-                      {...props}
-                    />
-                  );
-                }}
-              />
-            ))}
           </div>
-        </div>
-      );
-    }
+        )}
+      </div>
+    );
   }
 }
 

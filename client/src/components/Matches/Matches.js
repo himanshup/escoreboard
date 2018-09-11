@@ -8,7 +8,7 @@ import "./Matches.css";
 class Matches extends Component {
   constructor(props) {
     super(props);
-    this.state = { matches: [], loading: true };
+    this.state = { matches: [] };
     this.cancelTokenSource = axios.CancelToken.source();
   }
 
@@ -45,9 +45,6 @@ class Matches extends Component {
         throw err;
       }
     } finally {
-      this.setState({
-        loading: false
-      });
       this.cancelTokenSource = null;
     }
   };
@@ -58,24 +55,12 @@ class Matches extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.loading ? (
-          <Loading />
-        ) : (
-          <div className="row d-flex justify-content-center">
-            {this.state.matches.map(match => (
-              <div className="col-11 col-sm-9 col-md-6 col-lg-4" key={match.id}>
-                <ReactCSSTransitionGroup
-                  transitionName="matches"
-                  transitionEnterTimeout={500}
-                  transitionLeaveTimeout={300}
-                >
-                  <Match matchId={match.id} {...this.props} />
-                </ReactCSSTransitionGroup>
-              </div>
-            ))}
+      <div className="row d-flex justify-content-center">
+        {this.state.matches.map(match => (
+          <div className="col-11 col-sm-9 col-md-6 col-lg-4" key={match.id}>
+            <Match matchId={match.id} {...this.props} />
           </div>
-        )}
+        ))}
       </div>
     );
   }

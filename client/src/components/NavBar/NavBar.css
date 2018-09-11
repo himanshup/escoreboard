@@ -17,4 +17,6 @@ button.navbar-toggler {
   border-color: transparent;
 }
 
-
+.verticalLine {
+  border-left: 1px solid #ffffff;
+}

@@ -60,18 +60,18 @@ class NavBar extends Component {
                     Overwatch
                   </Link>
                 </NavItem>
-                <NavItem>
+                <NavItem className="pr-4">
                   <Link to="/" className="nav-link">
                     Dota
                   </Link>
                 </NavItem>
-                <NavItem>
-                  <Link to="/about" className="nav-link">
-                    about
-                  </Link>
+                <NavItem className="pl-4 verticalLine d-none d-md-block ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
+                    source
+                  </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                <NavItem className="d-sm-block d-md-none ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
                     source
                   </NavLink>
                 </NavItem>

@@ -30,7 +30,7 @@ class LeagueNav extends Component {
         <Navbar dark expand="md">
           <div className="container">
             <Link to="/" className="navbar-brand">
-              eScoreboard | LoL
+              eScoreboard
             </Link>
             <NavbarToggler onClick={() => this.handleClick()}>
               <HamburgerMenu
@@ -49,44 +49,94 @@ class LeagueNav extends Component {
             <Collapse isOpen={this.state.open} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <Link to={`${this.props.match.url}`} className="nav-link">
-                    Home
+                  <Link
+                    to={`${this.props.match.url}`}
+                    className={`nav-link ${
+                      window.location.pathname === "/lol" ? "active" : ""
+                    }`}
+                  >
+                    LoL
                   </Link>
                 </NavItem>
               </Nav>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to={`${this.props.match.url}/na`} className="nav-link">
+                  <Link
+                    to={`${this.props.match.url}/na`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/na`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     NA
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to={`${this.props.match.url}/eu`} className="nav-link">
+                  <Link
+                    to={`${this.props.match.url}/eu`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/eu`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     EU
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to={`${this.props.match.url}/lck`} className="nav-link">
+                  <Link
+                    to={`${this.props.match.url}/lck`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/lck`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     LCK
                   </Link>
                 </NavItem>
                 <NavItem>
-                  <Link to={`${this.props.match.url}/lpl`} className="nav-link">
+                  <Link
+                    to={`${this.props.match.url}/lpl`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/lpl`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     LPL
                   </Link>
                 </NavItem>
-                <NavItem>
-                  <Link to={`${this.props.match.url}/lms`} className="nav-link">
+                <NavItem className="pr-4">
+                  <Link
+                    to={`${this.props.match.url}/lms`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/lms`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     LMS
                   </Link>
                 </NavItem>
-                <NavItem>
-                  <Link to="/about" className="nav-link">
-                    about
-                  </Link>
+                <NavItem className="pl-4 verticalLine d-none d-md-block ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
+                    source
+                  </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                <NavItem className="d-sm-block d-md-none ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
                     source
                   </NavLink>
                 </NavItem>

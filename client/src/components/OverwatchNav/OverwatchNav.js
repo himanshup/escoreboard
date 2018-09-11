@@ -30,7 +30,7 @@ class OwerwatcNav extends Component {
         <Navbar dark expand="md">
           <div className="container">
             <Link to="/" className="navbar-brand">
-              eScoreboard | Overwatch
+              eScoreboard
             </Link>
             <NavbarToggler onClick={() => this.handleClick()}>
               <HamburgerMenu
@@ -49,30 +49,52 @@ class OwerwatcNav extends Component {
             <Collapse isOpen={this.state.open} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
-                  <Link to={`${this.props.match.url}`} className="nav-link">
-                    Home
+                  <Link
+                    to={`${this.props.match.url}`}
+                    className={`nav-link ${
+                      window.location.pathname === "/ow" ? "active" : ""
+                    }`}
+                  >
+                    Overwatch
                   </Link>
                 </NavItem>
               </Nav>
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Link to={`${this.props.match.url}/owl`} className="nav-link">
+                  <Link
+                    to={`${this.props.match.url}/owl`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/owl`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     OW League
                   </Link>
                 </NavItem>
-                <NavItem>
-                  <Link to={`${this.props.match.url}/wc`} className="nav-link">
+                <NavItem className="pr-4">
+                  <Link
+                    to={`${this.props.match.url}/wc`}
+                    className={`nav-link ${
+                      window.location.pathname.includes(
+                        `${this.props.match.url}/wc`
+                      )
+                        ? "active"
+                        : ""
+                    }`}
+                  >
                     World Cup
                   </Link>
                 </NavItem>
-
-                <NavItem>
-                  <Link to="/about" className="nav-link">
-                    about
-                  </Link>
+                <NavItem className="pl-4 verticalLine d-none d-md-block ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
+                    source
+                  </NavLink>
                 </NavItem>
-                <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">
+                <NavItem className="d-sm-block d-md-none ">
+                  <NavLink href="https://github.com/himanshup/escoreboard">
                     source
                   </NavLink>
                 </NavItem>
