@@ -3,6 +3,12 @@
   background: #222823;
 }
 
+.navbar-brand {
+  padding: 0 15px;
+  height: 70px;
+  line-height: 70px;
+}
+
 button.navbar-toggler {
   outline: none !important;
 }
@@ -10,3 +16,5 @@ button.navbar-toggler {
 .navbar-dark .navbar-toggler {
   border-color: transparent;
 }
+
+

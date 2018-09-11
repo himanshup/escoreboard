@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Collapse, { Panel } from "rc-collapse";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import Ionicon from "react-ionicons";
 import moment from "moment";
 import axios from "axios";
@@ -30,7 +31,7 @@ class Match extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      loading: true,
+      loading: this.props.loading,
       matchId: "",
       date: "",
       longDate: "",
@@ -69,6 +70,8 @@ class Match extends Component {
           status = "Final";
         } else if (match.status === "not_started") {
           status = "Not Started";
+        } else {
+          status = "Live";
         }
         // formats dates in a clean readable format
         const date = moment(match.begin_at.slice(0, 10)).format("ddd, MMM D");
@@ -136,9 +139,11 @@ class Match extends Component {
         }
       })
       .then(response => {
-        this.setState({
-          loading: false
-        });
+        setTimeout(() => {
+          this.setState({
+            loading: false
+          });
+        }, 1000);
       })
       .catch(error => {
         console.log(error);
@@ -192,89 +197,113 @@ class Match extends Component {
   };
 
   render() {
+    const teams = this.state.teams.map(team => (
+      <div key={team.id} className="media">
+        <img
+          className="mr-3"
+          src={
+            team.image
+              ? team.image
+              : "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png"
+          }
+          alt=""
+          width="50px"
+        />
+        <div className="media-body">
+          <h5>
+            {team.name}
+            <span className="float-right mt-2 badge badge-light p-2">
+              {team.score}
+            </span>
+            <div>
+              {team.status ? (
+                <span className="gameStatus text-muted">{team.status}</span>
+              ) : (
+                <span className="gameStatus text-muted invisible">TBD</span>
+              )}
+            </div>
+          </h5>
+        </div>
+      </div>
+    ));
     return (
       <div>
         {this.state.loading === true ? (
           ""
         ) : (
-          <div className="card border-0 mt-4 hvr-float">
-            <span className="ml-3 mt-2">
-              <span className="text-muted">{this.state.date}</span>
-              <span className="mr-3 mt-0 float-right">
-                {this.state.status === "Final" ||
-                this.state.status === "Not Started" ? (
-                  this.state.status
-                ) : (
-                  <span className="text-danger">
-                    <span className="pulse mr-1" /> Live
-                  </span>
-                )}
-              </span>
-            </span>
+          <ReactCSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={600}
+            transitionEnter={false}
+            transitionLeave={false}
+          >
+            <div className="card border-0 mt-4 hvr-float">
+              <span className="ml-3 mt-2">
+                <span className="text-muted">
+                  <ReactCSSTransitionGroup
+                    transitionName="example"
+                    transitionAppear={true}
+                    transitionAppearTimeout={600}
+                    transitionEnter={false}
+                    transitionLeave={false}
+                  >
+                    {this.state.date}{" "}
+                  </ReactCSSTransitionGroup>
+                </span>
 
-            <div className="card-body">
-              {this.state.teams.map(team => (
-                <div key={team.id} className="media">
-                  <img
-                    className="mr-3"
-                    src={
-                      team.image
-                        ? team.image
-                        : "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png"
-                    }
-                    alt=""
-                    width="50px"
-                  />
-                  <div className="media-body">
-                    <h5>
-                      {team.name}
-                      <span className="float-right mt-2 badge badge-light p-2">
-                        {team.score}
-                      </span>
-                      <div>
-                        {team.status ? (
-                          <span className="gameStatus text-muted">
-                            {team.status}
-                          </span>
-                        ) : (
-                          <span className="gameStatus text-muted invisible">
-                            TBD
-                          </span>
-                        )}
+                <span
+                  className={`mr-3 mt-0 float-right ${
+                    this.state.status === "Live" ? "text-danger" : ""
+                  }`}
+                >
+                  {this.state.status === "Live" && (
+                    <span className="pulse mr-1" />
+                  )}{" "}
+                  {this.state.status}
+                </span>
+              </span>
+
+              <div className="card-body">
+                <ReactCSSTransitionGroup
+                  transitionName="matches"
+                  transitionEnterTimeout={500}
+                  transitionLeaveTimeout={300}
+                >
+                  {teams}
+                </ReactCSSTransitionGroup>
+                <Collapse
+                  accordion={this.state.accordion}
+                  onChange={this.onChange}
+                  activeKey={this.state.activeKey}
+                  expandIcon={expandIcon}
+                  className="align-self-center bg-transparent border-0"
+                >
+                  <Panel key={this.state.matchId}>
+                    <div className="text-dark text-center">
+                      <h5 className="card-title">
+                        {this.state.league} {this.state.tournamentName}
+                      </h5>
+                      <div>{this.state.matchName}</div>
+                      <div>{this.state.longDate}</div>
+                      <div>Best of {this.state.numOfGames} series</div>
+                      {this.state.patch && <div>Patch: {this.state.patch}</div>}
+                      <div className="mt-3">
+                        {this.state.games.map(game => (
+                          <div key={game.id}>
+                            Game {game.position}:{" "}
+                            {game.winner
+                              ? `${game.winner} wins`
+                              : `In Progress`}
+                          </div>
+                        ))}
                       </div>
-                    </h5>
-                  </div>
-                </div>
-              ))}
-              <Collapse
-                accordion={this.state.accordion}
-                onChange={this.onChange}
-                activeKey={this.state.activeKey}
-                expandIcon={expandIcon}
-                className="align-self-center bg-transparent border-0"
-              >
-                <Panel key={this.state.matchId}>
-                  <div className="text-dark text-center">
-                    <h5 className="card-title">
-                      {this.state.league} {this.state.tournamentName}
-                    </h5>
-                    <div>{this.state.matchName}</div>
-                    <div>{this.state.longDate}</div>
-                    <div>Best of {this.state.numOfGames} series</div>
-                    {this.state.patch && <div>Patch: {this.state.patch}</div>}
-                    <div className="mt-3">
-                      {this.state.games.map(game => (
-                        <div key={game.id}>
-                          Game {game.position}:{" "}
-                          {game.winner ? `${game.winner} wins` : `In Progress`}
-                        </div>
-                      ))}
                     </div>
-                  </div>
-                </Panel>
-              </Collapse>
+                  </Panel>
+                </Collapse>
+              </div>
             </div>
-          </div>
+          </ReactCSSTransitionGroup>
         )}
       </div>
     );

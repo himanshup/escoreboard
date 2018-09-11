@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import HamburgerMenu from "react-hamburger-menu";
 import "./NavBar.css";
 import {
   Collapse,
@@ -14,13 +15,13 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isOpen: false
+      open: false
     };
   }
 
-  toggle = () => {
+  handleClick = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      open: !this.state.open
     });
   };
 
@@ -32,8 +33,22 @@ class NavBar extends Component {
             <Link to="/" className="navbar-brand">
               eScoreboard
             </Link>
-            <NavbarToggler onClick={() => this.toggle()} />
-            <Collapse isOpen={this.state.isOpen} navbar>
+            <NavbarToggler onClick={() => this.handleClick()}>
+              <HamburgerMenu
+                isOpen={this.state.open}
+                menuClicked={() => this.handleClick()}
+                width={27}
+                height={17}
+                strokeWidth={1}
+                rotate={0}
+                color="white"
+                borderRadius={0}
+                animationDuration={0.3}
+                className="hamburgerMenu"
+              />
+            </NavbarToggler>
+
+            <Collapse isOpen={this.state.open} navbar>
               <Nav className="ml-auto" navbar>
                 <NavItem>
                   <Link to="/lol" className="nav-link">
