@@ -6,14 +6,14 @@ Created an eSports scoreboard using [Pandascore's API](https://pandascore.co/), 
 
 Fetched data from Pandascore's REST API on tournaments and matches for popular eSports games (League of Legends, Overwatch, etc).  
 
-Currently has data on the following League of Legends leagues: 
+Currently has data on the following League of Legends leagues (for 2018): 
 * NA
 * EU
 * LCK
 * LPL
 * LMS  
 
-Overwatch leagues:
+Overwatch leagues (for 2018):
 * Overwatch League
 * World Cup
 
