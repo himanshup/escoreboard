@@ -5,7 +5,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 const token = process.env.PANDASCORE_ACCESS_TOKEN;
 
-// League of Legends API calls
+// API calls
 // get series with given series id. this is needed to get all tournaments for a given series
 app.get("/api/:game/series/:seriesId", (req, res) => {
   const url = `https://api.pandascore.co/${req.params.game}/series?filter[id]=${
@@ -71,5 +71,14 @@ app.get("/api/:game/match/:matchId", (req, res) => {
       res.send(error.response.data);
     });
 });
+
+if (process.env.NODE_ENV === "production") {
+  // Serve any static files
+  app.use(express.static(path.join(__dirname, "client/build")));
+  // Handle React routing, return all requests to React app
+  app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "client/build", "index.html"));
+  });
+}
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
