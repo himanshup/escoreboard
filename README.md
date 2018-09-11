@@ -4,7 +4,7 @@
 Created an eSports scoreboard using [Pandascore's REST API](https://pandascore.co/), Node.js, Express, and React.
 
 
-Fetched data on tournaments and matches for popular eSports games (League of Legends, Overwatch, etc).  
+Used the API to fetch data on tournaments and matches for popular eSports games (League of Legends, Overwatch, etc).  
 
 Currently has data on the following League of Legends leagues (for 2018): 
 * NA
