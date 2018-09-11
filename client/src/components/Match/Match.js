@@ -164,7 +164,7 @@ class Match extends Component {
     });
   };
 
-  // loop through teams and scores to see which scores belond to which teams
+  // loop through teams and scores to see which scores belong to which teams
   // also checks who the winner is
   setTeams = match => {
     for (const team of match.opponents) {

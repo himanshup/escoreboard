@@ -1,5 +1,4 @@
 import React from "react";
-import { FaGithub } from "react-icons/fa";
 import "./Footer.css";
 
 const Footer = () => {
@@ -8,10 +7,10 @@ const Footer = () => {
       <footer className="footer">
         <div className="container text-center">
           <a
-            href="https://github.com/himanshup/spotify-playlist-creator"
+            href="https://github.com/himanshup/escoreboard"
             className="text-dark "
           >
-            <FaGithub className="footerIcon grow" />
+            <i className="icon ion-logo-github" />
           </a>
         </div>
       </footer>

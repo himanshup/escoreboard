@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Match from "../Match/Match";
 import axios from "axios";
-import "./Matches.css";
 
 class Matches extends Component {
   constructor(props) {

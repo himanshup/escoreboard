@@ -32,7 +32,7 @@ class DatesNav extends Component {
           }
         }
 
-        const newDatesArray = this.removeDuplicates(dates);
+        const newDatesArray = Array.from(new Set(dates));
 
         this.setState({
           dates: newDatesArray
@@ -74,18 +74,6 @@ class DatesNav extends Component {
       .catch(error => {
         console.log(error);
       });
-  };
-
-  getCurrentIndexFromStorage = () => {
-    const index = localStorage.getItem("currentIndex");
-    console.log(index);
-    this.setState({
-      currentIndex: index
-    });
-  };
-
-  removeDuplicates = a => {
-    return Array.from(new Set(a));
   };
 
   getCurrentDate = () => {
