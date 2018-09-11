@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Loading from "../Loading/Loading.js";
 import Collapse, { Panel } from "rc-collapse";
 import Ionicon from "react-ionicons";
 import moment from "moment";
