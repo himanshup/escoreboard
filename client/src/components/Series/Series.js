@@ -62,7 +62,7 @@ class Series extends Component {
     return (
       <div>
         {this.state.loading ? (
-          <Loading />
+          ""
         ) : (
           <div>
             <ReactCSSTransitionGroup

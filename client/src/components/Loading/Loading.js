@@ -10,9 +10,6 @@ const override = css`
 class Loading extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true
-    };
   }
   render() {
     return (
@@ -22,7 +19,6 @@ class Loading extends Component {
           sizeUnit={"px"}
           size={70}
           color={"#222823"}
-          loading={this.state.loading}
         />
       </div>
     );
