@@ -210,7 +210,7 @@ class Match extends Component {
         <div className="media-body">
           <h5>
             {team.name}
-            <span className="float-right mt-2 badge badge-light p-2">
+            <span className="float-right mt-1 badge badge-light p-2">
               {team.score}
             </span>
             <div>
@@ -224,6 +224,7 @@ class Match extends Component {
         </div>
       </div>
     ));
+
     return (
       <div>
         {this.state.loading === true ? (
