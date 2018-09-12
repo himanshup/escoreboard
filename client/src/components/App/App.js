@@ -7,16 +7,7 @@ import LeagueNav from "../LeagueNav/LeagueNav.js";
 import LeagueRoutes from "../LeagueRoutes/LeagueRoutes.js";
 import OverwatchNav from "../OverwatchNav/OverwatchNav.js";
 import OverwatchRoutes from "../OverwatchRoutes/OverwatchRoutes.js";
-// import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import { fadeIn } from "react-animations";
-import { StyleSheet, css } from "aphrodite";
-
-const styles = StyleSheet.create({
-  fadeIn: {
-    animationName: fadeIn,
-    animationDuration: "1s"
-  }
-});
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class App extends Component {
   render() {
@@ -30,9 +21,15 @@ class App extends Component {
               return (
                 <div>
                   <NavBar />
-                  <div className={css(styles.fadeIn)}>
+                  <ReactCSSTransitionGroup
+                    transitionName="example"
+                    transitionAppear={true}
+                    transitionAppearTimeout={600}
+                    transitionEnter={false}
+                    transitionLeave={false}
+                  >
                     <Home />
-                  </div>
+                  </ReactCSSTransitionGroup>
                 </div>
               );
             }}
