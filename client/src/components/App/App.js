@@ -8,6 +8,7 @@ import LeagueRoutes from "../LeagueRoutes/LeagueRoutes.js";
 import OverwatchNav from "../OverwatchNav/OverwatchNav.js";
 import OverwatchRoutes from "../OverwatchRoutes/OverwatchRoutes.js";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import Footer from "../Footer/Footer.js";
 
 class App extends Component {
   render() {
@@ -29,6 +30,7 @@ class App extends Component {
                     transitionLeave={false}
                   >
                     <Home />
+                    <Footer />
                   </ReactCSSTransitionGroup>
                 </div>
               );
@@ -41,6 +43,7 @@ class App extends Component {
                 <div>
                   <LeagueNav {...props} />
                   <LeagueRoutes {...props} />
+                  <Footer />
                 </div>
               );
             }}
@@ -52,6 +55,7 @@ class App extends Component {
                 <div>
                   <OverwatchNav {...props} />
                   <OverwatchRoutes {...props} />
+                  <Footer />
                 </div>
               );
             }}
