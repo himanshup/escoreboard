@@ -19,6 +19,7 @@ Overwatch leagues (for 2018):
 
 ## Todos
 * Get data for matches in real time
+* Add more games (Dota, CSGO)
 
 ## Development
 
