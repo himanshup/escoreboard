@@ -1,5 +1,5 @@
 #menu {
-  background: #D1D2D3;
+  background: #d8d8d8;
 }
 
 .hvr-underline-from-center {
@@ -42,12 +42,14 @@
 }
 
 .menuLinks {
-  color: #6c757d;
+  color: #343a40;
+  opacity: 0.7;
   transition: 0.2s ease-in-out;
 }
 
 .menuLinks:hover {
   color: #343a40;
+  opacity: 1;
   transition: 0.2s ease-in-out;
 }
 

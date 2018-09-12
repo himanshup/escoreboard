@@ -183,11 +183,6 @@ class DatesNav extends Component {
                               this.state.dates[this.state.currentIndex]
                             }`}
                             className="lead activeLink"
-                            onClick={() =>
-                              this.setState({
-                                currentIndex: this.state.currentIndex
-                              })
-                            }
                           >
                             {this.state.dates[this.state.currentIndex] === today
                               ? `Today, ${moment(
