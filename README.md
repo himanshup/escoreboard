@@ -1,5 +1,6 @@
 # eScoreboard
-  
+
+![Image 1](https://raw.githubusercontent.com/himanshup/escoreboard/master/screenshots/scoreboard.png)  
 Created an eSports scoreboard using [Pandascore's REST API](https://pandascore.co/), Node.js, Express, and React.
 
 
