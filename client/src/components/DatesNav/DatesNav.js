@@ -10,70 +10,72 @@ class DatesNav extends Component {
   constructor(props) {
     super(props);
     this.state = { dates: [], loading: true };
+    this.cancelTokenSource = axios.CancelToken.source();
   }
 
   componentDidMount() {
     this.getDates();
   }
 
-  getDates = () => {
+  getDates = async () => {
     let game = this.props.match.path.includes("lol") ? "lol" : "ow";
 
-    // get tournament by id and then store the dates from each match in an array
-    // also used to generate links/routes
-    axios
-      .get(`/api/${game}/tournament/${this.props.tournamentId}`)
-      .then(tournament => {
-        const matches = tournament.data[0].matches;
-        const dates = [];
-        for (const match of matches) {
-          if (match.begin_at !== null) {
-            dates.push(match.begin_at.slice(0, 10));
-          }
+    try {
+      const tournament = await axios.get(
+        `/api/${game}/tournament/${this.props.tournamentId}`
+      );
+      const matches = tournament.data[0].matches;
+      const dates = [];
+      for (const match of matches) {
+        if (match.begin_at !== null) {
+          dates.push(match.begin_at.slice(0, 10));
         }
+      }
 
-        const newDatesArray = Array.from(new Set(dates));
-
-        this.setState({
-          dates: newDatesArray
-        });
-
-        // determining what the current index should be
-        for (const [index, match] of matches.entries()) {
-          if (match.status === "running") {
-            this.setState({
-              currentIndex: index
-            });
-            break;
-          } else if (match.status === "not_started") {
-            this.setState({
-              currentIndex: index
-            });
-            break;
-          } else if (tournament.data[0].winner_id !== null) {
-            this.setState({
-              currentIndex: newDatesArray.length - 1
-            });
-            break;
-          } else if (
-            tournament.data[0].winner_id == null &&
-            matches[matches.length - 1].status === "finished"
-          ) {
-            this.setState({
-              currentIndex: newDatesArray.length - 1
-            });
-            break;
-          }
-        }
-      })
-      .then(response => {
-        this.setState({
-          loading: false
-        });
-      })
-      .catch(error => {
-        console.log(error);
+      const newDatesArray = Array.from(new Set(dates));
+      this.setState({
+        dates: newDatesArray
       });
+
+      // determining what the current index should be
+      for (const [index, match] of matches.entries()) {
+        if (match.status === "running") {
+          this.setState({
+            currentIndex: index
+          });
+          break;
+        } else if (match.status === "not_started") {
+          this.setState({
+            currentIndex: index
+          });
+          break;
+        } else if (tournament.data[0].winner_id !== null) {
+          this.setState({
+            currentIndex: newDatesArray.length - 1
+          });
+          break;
+        } else if (
+          tournament.data[0].winner_id == null &&
+          matches[matches.length - 1].status === "finished"
+        ) {
+          this.setState({
+            currentIndex: newDatesArray.length - 1
+          });
+          break;
+        }
+      }
+      this.setState({
+        loading: false
+      });
+    } catch (err) {
+      if (axios.isCancel(err)) {
+        // ignore
+      } else {
+        throw err;
+      }
+    } finally {
+      this.cancelTokenSource = null;
+    }
   };
 
   getCurrentDate = () => {
@@ -91,6 +93,10 @@ class DatesNav extends Component {
     }
     return (today = `${yyyy}-${mm}-${dd}`);
   };
+
+  componentWillUnmount() {
+    this.cancelTokenSource && this.cancelTokenSource.cancel();
+  }
 
   render() {
     const today = this.getCurrentDate();
