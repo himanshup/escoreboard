@@ -4,7 +4,7 @@
 Created an eSports scoreboard using [Pandascore's REST API](https://pandascore.co/), Node.js, Express, and React.
 
 
-Used the API to fetch data on tournaments and matches for popular eSports games (League of Legends, Overwatch, etc). It will show if a game is live and update the score/games (who won the game) after each game. Unfortunately, I can't get data on the game itself (only who won) because it costs money.
+Used the API to fetch data on tournaments and matches for popular eSports games (League of Legends, Overwatch, etc). It will show if a game is live and update the scores/status of games (who won the game) after each game. Unfortunately, I can't get data on the game itself (only who won) because it costs money.
 
 Currently has data on the following League of Legends leagues (for 2018): 
 * NA
