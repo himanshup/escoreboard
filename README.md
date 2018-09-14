@@ -22,7 +22,7 @@ Overwatch leagues (for 2018):
 * Add more leagues (for LoL)
 * Add more games (Dota, CSGO)
 
-## Install
+## Development
 You need to get your own access token from [Pandascore](https://pandascore.co) and export it as an env variable: `export PANDASCORE_ACCESS_TOKEN="accesstoken"`.
 
 ```
