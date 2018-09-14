@@ -31,31 +31,39 @@ class DatesNav extends Component {
           dates.push(match.begin_at.slice(0, 10));
         }
       }
-
       const newDatesArray = Array.from(new Set(dates));
+
       this.setState({
         dates: newDatesArray
       });
 
-      // determining what the current index should be
-      for (const [index, match] of matches.entries()) {
+      // determines where the dates navbar should start
+      for (const match of matches) {
         if (match.status === "running") {
-          this.setState({
-            currentIndex: index
-          });
-          break;
+          for (const [dateIndex, date] of newDatesArray.entries()) {
+            if (date === match.begin_at.slice(0, 10)) {
+              this.setState({
+                currentIndex: dateIndex
+              });
+            }
+            break;
+          }
         } else if (match.status === "not_started") {
-          this.setState({
-            currentIndex: index
-          });
-          break;
+          for (const [dateIndex, date] of newDatesArray.entries()) {
+            if (date === match.begin_at.slice(0, 10)) {
+              this.setState({
+                currentIndex: dateIndex
+              });
+            }
+            break;
+          }
         } else if (tournament.data[0].winner_id !== null) {
           this.setState({
             currentIndex: newDatesArray.length - 1
           });
           break;
         } else if (
-          tournament.data[0].winner_id == null &&
+          tournament.data[0].winner_id === null &&
           matches[matches.length - 1].status === "finished"
         ) {
           this.setState({
