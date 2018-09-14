@@ -19,9 +19,11 @@ Overwatch leagues (for 2018):
 
 ## Todos
 * Get data for matches in real time
+* Add more leagues (for LoL)
 * Add more games (Dota, CSGO)
 
-## Development
+## Install
+You need to get your own access token from [Pandascore](https://pandascore.co) and export it as an env variable: `export PANDASCORE_ACCESS_TOKEN="accesstoken"`.
 
 ```
 git clone https://github.com/himanshup/escoreboard.git
