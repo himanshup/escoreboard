@@ -17,14 +17,12 @@ const OverwatchRoutes = ({ match }) => {
         exact
         path={match.path}
         render={props => {
-          return <OverwatchHome {...props} />;
-        }}
-      />
-      <Route
-        exact
-        path={match.path}
-        render={props => {
-          return <OverwatchLinks {...props} />;
+          return (
+            <div>
+              <OverwatchHome {...props} />
+              <OverwatchLinks {...props} />
+            </div>
+          );
         }}
       />
 

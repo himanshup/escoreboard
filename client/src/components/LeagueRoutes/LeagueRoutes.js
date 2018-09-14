@@ -18,14 +18,12 @@ const LeagueRoutes = ({ match }) => {
         exact
         path={match.path}
         render={props => {
-          return <LeagueHome {...props} />;
-        }}
-      />
-      <Route
-        exact
-        path={match.path}
-        render={props => {
-          return <LeagueLinks {...props} />;
+          return (
+            <div>
+              <LeagueHome {...props} />
+              <LeagueLinks {...props} />
+            </div>
+          );
         }}
       />
 

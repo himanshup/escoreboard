@@ -174,7 +174,7 @@ class Match extends Component {
           if (match.winner !== null && match.winner.id === team.opponent.id) {
             gameStatus = "Victory";
           } else if (match.winner === null) {
-            gameStatus = "";
+            gameStatus = "TBD";
           } else {
             gameStatus = "Defeat";
           }
@@ -195,39 +195,9 @@ class Match extends Component {
   };
 
   render() {
-    const teams = this.state.teams.map(team => (
-      <div key={team.id} className="media">
-        <img
-          className="mr-3"
-          src={
-            team.image
-              ? team.image
-              : "https://lolstatic-a.akamaihd.net/frontpage/apps/prod/lolesports_feapp/en_US/82d3718bcef9317f420e4518a7cb7ade57ed9116/assets/img/tbd.png"
-          }
-          alt=""
-          width="50px"
-        />
-        <div className="media-body">
-          <h5>
-            {team.name}
-            <span className="float-right mt-1 badge badge-light p-2">
-              {team.score}
-            </span>
-            <div>
-              {team.status ? (
-                <span className="gameStatus text-muted">{team.status}</span>
-              ) : (
-                <span className="gameStatus text-muted invisible">TBD</span>
-              )}
-            </div>
-          </h5>
-        </div>
-      </div>
-    ));
-
     return (
       <div>
-        {this.state.loading === true ? (
+        {this.state.loading ? (
           ""
         ) : (
           <ReactCSSTransitionGroup
@@ -242,9 +212,8 @@ class Match extends Component {
                 <span className="text-muted">{this.state.date} </span>
 
                 <span
-                  className={`mr-3 mt-0 float-right ${
-                    this.state.status === "Live" ? "text-danger" : ""
-                  }`}
+                  className={`mr-3 mt-0 float-right ${this.state.status ===
+                    "Live" && "text-danger"}`}
                 >
                   {this.state.status === "Live" && (
                     <span className="pulse mr-1" />
@@ -259,7 +228,32 @@ class Match extends Component {
                   transitionEnterTimeout={500}
                   transitionLeaveTimeout={300}
                 >
-                  {teams}
+                  {this.state.teams.map(team => (
+                    <div key={team.id} className="media">
+                      <img
+                        className="mr-3"
+                        src={team.image}
+                        alt=""
+                        width="50px"
+                      />
+                      <div className="media-body">
+                        <h5>
+                          {team.name}
+                          <span className="float-right mt-1 badge badge-light p-2">
+                            {team.score}
+                          </span>
+                          <div>
+                            <span
+                              className={`gameStatus text-muted ${team.status ===
+                                "TBD" && `invisible`}`}
+                            >
+                              {team.status}
+                            </span>
+                          </div>
+                        </h5>
+                      </div>
+                    </div>
+                  ))}
                 </ReactCSSTransitionGroup>
                 <Collapse
                   accordion={this.state.accordion}

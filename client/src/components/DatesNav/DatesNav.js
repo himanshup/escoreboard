@@ -40,23 +40,23 @@ class DatesNav extends Component {
       // determines where the dates navbar should start
       for (const match of matches) {
         if (match.status === "running") {
-          for (const [dateIndex, date] of newDatesArray.entries()) {
+          for (const [index, date] of newDatesArray.entries()) {
             if (date === match.begin_at.slice(0, 10)) {
               this.setState({
-                currentIndex: dateIndex
+                currentIndex: index
               });
             }
-            break;
           }
+          break;
         } else if (match.status === "not_started") {
-          for (const [dateIndex, date] of newDatesArray.entries()) {
+          for (const [index, date] of newDatesArray.entries()) {
             if (date === match.begin_at.slice(0, 10)) {
               this.setState({
-                currentIndex: dateIndex
+                currentIndex: index
               });
             }
-            break;
           }
+          break;
         } else if (tournament.data[0].winner_id !== null) {
           this.setState({
             currentIndex: newDatesArray.length - 1

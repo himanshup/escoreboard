@@ -12,7 +12,6 @@ class Series extends Component {
     this.state = {
       loading: true,
       tournaments: [],
-      dropdownOpen: false,
       name: "",
       logo: "",
       year: "",
