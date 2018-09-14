@@ -174,7 +174,7 @@ class Match extends Component {
           if (match.winner !== null && match.winner.id === team.opponent.id) {
             gameStatus = "Victory";
           } else if (match.winner === null) {
-            gameStatus = "TBD";
+            gameStatus = "";
           } else {
             gameStatus = "Defeat";
           }
@@ -243,12 +243,15 @@ class Match extends Component {
                             {team.score}
                           </span>
                           <div>
-                            <span
-                              className={`gameStatus text-muted ${team.status ===
-                                "TBD" && `invisible`}`}
-                            >
-                              {team.status}
-                            </span>
+                            {team.status ? (
+                              <span className="gameStatus text-muted">
+                                {team.status}
+                              </span>
+                            ) : (
+                              <span className="gameStatus text-muted invisible">
+                                TBD
+                              </span>
+                            )}
                           </div>
                         </h5>
                       </div>
