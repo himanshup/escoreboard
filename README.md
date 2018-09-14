@@ -32,3 +32,6 @@ npm install
 cd ..
 npm run dev
 ```
+
+## Credits
+**League of Legends Icon** : [icons8](https://icons8.com/icon/31595/league-of-legends)
