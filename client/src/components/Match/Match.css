@@ -51,6 +51,8 @@
   border-radius: 50%;
   background: #dc3545;
   box-shadow: 0 0 0 rgba(220, 53, 69, 0.4);
+  -webkit-animation: pulse 2s infinite;
+  -moz-animation: pulse 2s infinite;
   animation: pulse 2s infinite;
 }
 
@@ -86,6 +88,9 @@
 
 .matches-enter.matches-enter-active {
   opacity: 1;
+  -webkit-transition: opacity 500ms ease-in;
+  -moz-transition: opacity 500ms ease-in;
+
   transition: opacity 500ms ease-in;
 }
 
@@ -95,5 +100,7 @@
 
 .matches-leave.matches-leave-active {
   opacity: 0.01;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
   transition: opacity 300ms ease-in;
 }
