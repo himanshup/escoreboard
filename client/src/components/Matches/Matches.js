@@ -6,7 +6,6 @@ class Matches extends Component {
   constructor(props) {
     super(props);
     this.state = { matches: [] };
-    this.cancelTokenSource = axios.CancelToken.source();
   }
 
   componentDidMount() {
@@ -19,36 +18,23 @@ class Matches extends Component {
     }
   }
 
-  getMatches = async date => {
+  getMatches = date => {
     let game = this.props.match.path.includes("lol") ? "lol" : "ow";
     // use tournament id and date passed in props to find all matches on this date
     // store matches and then pass to Match component to generate cards
-    try {
-      const matches = await axios.get(
-        `/api/${game}/matches/${this.props.id}/${date}`,
-        {
-          cancelToken: this.cancelTokenSource.token
+    axios
+      .get(`/api/${game}/matches/${this.props.id}/${date}`)
+      .then(matches => {
+        for (const match of matches.data) {
+          this.setState({
+            matches: this.state.matches.concat([match])
+          });
         }
-      );
-      for (const match of matches.data) {
-        this.setState({
-          matches: this.state.matches.concat([match])
-        });
-      }
-    } catch (err) {
-      if (axios.isCancel(err)) {
-        // ignore
-      } else {
-        throw err;
-      }
-    } finally {
-      this.cancelTokenSource = null;
-    }
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
-
-  componentWillUnmount() {
-    this.cancelTokenSource && this.cancelTokenSource.cancel();
-  }
 
   render() {
     return (
