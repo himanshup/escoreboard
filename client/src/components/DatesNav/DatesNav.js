@@ -14,16 +14,20 @@ class DatesNav extends Component {
   }
 
   componentDidMount() {
-    this.getDates();
+    this.getDates(this.props.tournamentId);
   }
 
-  getDates = async () => {
+  componentDidUpdate(prevProps) {
+    if (this.props.tournamentId !== prevProps.tournamentId) {
+      this.getDates(this.props.tournamentId);
+    }
+  }
+
+  getDates = async date => {
     let game = this.props.match.path.includes("lol") ? "lol" : "ow";
 
     try {
-      const tournament = await axios.get(
-        `/api/${game}/tournament/${this.props.tournamentId}`
-      );
+      const tournament = await axios.get(`/api/${game}/tournament/${date}`);
       const matches = tournament.data[0].matches;
       const dates = [];
       for (const match of matches) {
