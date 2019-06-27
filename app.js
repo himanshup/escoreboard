@@ -28,8 +28,8 @@ app.get("/api/:game/tournament/:id", (req, res) => {
 
   axios
     .get(url)
-    .then(response => {
-      res.send(response.data);
+    .then(tournaments => {
+      res.send(tournaments.data);
     })
     .catch(error => {
       res.send(error.response.data);
@@ -45,8 +45,8 @@ app.get("/api/:game/matches/:tournamentId/:date", (req, res) => {
 
   axios
     .get(url)
-    .then(response => {
-      res.send(response.data);
+    .then(matches => {
+      res.send(matches.data);
     })
     .catch(error => {
       res.send(error.response.data);
@@ -60,8 +60,8 @@ app.get("/api/:game/match/:matchId", (req, res) => {
 
   axios
     .get(url)
-    .then(response => {
-      res.send(response.data);
+    .then(match => {
+      res.send(match.data);
     })
     .catch(error => {
       res.send(error.response.data);
