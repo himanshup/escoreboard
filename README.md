@@ -14,7 +14,6 @@ cd escoreboard
 yarn install    
 cd client       
 yarn install
-cd ..
 ```
 
 Go [here](https://pandascore.co/) to get an access token  
